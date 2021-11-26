@@ -45,7 +45,7 @@ class WebCryptoDartDL {
   int webcrypto_dart_dl_attach_finalizer(
     Object object,
     ffi.Pointer<ffi.Void> pointer,
-    ffi.Pointer<ffi.NativeFunction<webcrypto_finalizer_t>> finalizer,
+    webcrypto_finalizer_t finalizer,
     int external_allocation_size,
   ) {
     return _webcrypto_dart_dl_attach_finalizer(
@@ -56,13 +56,17 @@ class WebCryptoDartDL {
     );
   }
 
-  late final _webcrypto_dart_dl_attach_finalizer_ptr =
-      _lookup<ffi.NativeFunction<_c_webcrypto_dart_dl_attach_finalizer>>(
-          'webcrypto_dart_dl_attach_finalizer');
-  late final _dart_webcrypto_dart_dl_attach_finalizer
-      _webcrypto_dart_dl_attach_finalizer =
-      _webcrypto_dart_dl_attach_finalizer_ptr
-          .asFunction<_dart_webcrypto_dart_dl_attach_finalizer>();
+  late final _webcrypto_dart_dl_attach_finalizerPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(
+              ffi.Handle,
+              ffi.Pointer<ffi.Void>,
+              webcrypto_finalizer_t,
+              ffi.IntPtr)>>('webcrypto_dart_dl_attach_finalizer');
+  late final _webcrypto_dart_dl_attach_finalizer =
+      _webcrypto_dart_dl_attach_finalizerPtr.asFunction<
+          int Function(
+              Object, ffi.Pointer<ffi.Void>, webcrypto_finalizer_t, int)>();
 
   /// Initialize Dart API with dynamic linking.
   ///
@@ -78,12 +82,11 @@ class WebCryptoDartDL {
     );
   }
 
-  late final _webcrypto_dart_dl_initialize_ptr =
-      _lookup<ffi.NativeFunction<_c_webcrypto_dart_dl_initialize>>(
+  late final _webcrypto_dart_dl_initializePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<ffi.Void>)>>(
           'webcrypto_dart_dl_initialize');
-  late final _dart_webcrypto_dart_dl_initialize _webcrypto_dart_dl_initialize =
-      _webcrypto_dart_dl_initialize_ptr
-          .asFunction<_dart_webcrypto_dart_dl_initialize>();
+  late final _webcrypto_dart_dl_initialize = _webcrypto_dart_dl_initializePtr
+      .asFunction<int Function(ffi.Pointer<ffi.Void>)>();
 
   /// Function to lookup BoringSSL symbols based on index in the Sym enum.
   /// See src/symbols.yaml for details.
@@ -95,45 +98,206 @@ class WebCryptoDartDL {
     );
   }
 
-  late final _webcrypto_lookup_symbol_ptr =
-      _lookup<ffi.NativeFunction<_c_webcrypto_lookup_symbol>>(
+  late final _webcrypto_lookup_symbolPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Int32)>>(
           'webcrypto_lookup_symbol');
-  late final _dart_webcrypto_lookup_symbol _webcrypto_lookup_symbol =
-      _webcrypto_lookup_symbol_ptr.asFunction<_dart_webcrypto_lookup_symbol>();
+  late final _webcrypto_lookup_symbol = _webcrypto_lookup_symbolPtr
+      .asFunction<ffi.Pointer<ffi.Void> Function(int)>();
 }
 
 class _Dart_Handle extends ffi.Opaque {}
 
-typedef webcrypto_finalizer_t = ffi.Void Function(
-  ffi.Pointer<ffi.Void>,
-);
+class _Dart_NativeArgument_Value extends ffi.Opaque {}
 
-typedef _c_webcrypto_dart_dl_attach_finalizer = ffi.Int32 Function(
-  ffi.Handle object,
-  ffi.Pointer<ffi.Void> pointer,
-  ffi.Pointer<ffi.NativeFunction<webcrypto_finalizer_t>> finalizer,
-  ffi.IntPtr external_allocation_size,
-);
+class __pthread_cond_s extends ffi.Struct {
+  @ffi.Array.multi([2])
+  external ffi.Array<ffi.Uint32> __g_refs;
 
-typedef _dart_webcrypto_dart_dl_attach_finalizer = int Function(
-  Object object,
-  ffi.Pointer<ffi.Void> pointer,
-  ffi.Pointer<ffi.NativeFunction<webcrypto_finalizer_t>> finalizer,
-  int external_allocation_size,
-);
+  @ffi.Array.multi([2])
+  external ffi.Array<ffi.Uint32> __g_size;
 
-typedef _c_webcrypto_dart_dl_initialize = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> initialize_api_dl_data,
-);
+  @ffi.Uint32()
+  external int __g1_orig_size;
 
-typedef _dart_webcrypto_dart_dl_initialize = int Function(
-  ffi.Pointer<ffi.Void> initialize_api_dl_data,
-);
+  @ffi.Uint32()
+  external int __wrefs;
 
-typedef _c_webcrypto_lookup_symbol = ffi.Pointer<ffi.Void> Function(
-  ffi.Int32 index,
-);
+  @ffi.Array.multi([2])
+  external ffi.Array<ffi.Uint32> __g_signals;
+}
 
-typedef _dart_webcrypto_lookup_symbol = ffi.Pointer<ffi.Void> Function(
-  int index,
-);
+class __pthread_internal_list extends ffi.Struct {
+  external ffi.Pointer<__pthread_internal_list> __prev;
+
+  external ffi.Pointer<__pthread_internal_list> __next;
+}
+
+typedef __pthread_list_t = __pthread_internal_list;
+
+class __pthread_mutex_s extends ffi.Struct {
+  @ffi.Int32()
+  external int __lock;
+
+  @ffi.Uint32()
+  external int __count;
+
+  @ffi.Int32()
+  external int __owner;
+
+  @ffi.Uint32()
+  external int __nusers;
+
+  @ffi.Int32()
+  external int __kind;
+
+  @ffi.Int16()
+  external int __spins;
+
+  @ffi.Int16()
+  external int __elision;
+
+  external __pthread_list_t __list;
+}
+
+class __pthread_rwlock_arch_t extends ffi.Struct {
+  @ffi.Uint32()
+  external int __readers;
+
+  @ffi.Uint32()
+  external int __writers;
+
+  @ffi.Uint32()
+  external int __wrphase_futex;
+
+  @ffi.Uint32()
+  external int __writers_futex;
+
+  @ffi.Uint32()
+  external int __pad3;
+
+  @ffi.Uint32()
+  external int __pad4;
+
+  @ffi.Int32()
+  external int __cur_writer;
+
+  @ffi.Int32()
+  external int __shared;
+
+  @ffi.Int8()
+  external int __rwelision;
+
+  @ffi.Array.multi([7])
+  external ffi.Array<ffi.Uint8> __pad1;
+
+  @ffi.Uint64()
+  external int __pad2;
+
+  @ffi.Uint32()
+  external int __flags;
+}
+
+/// It is reasonable to include pthread.h on non-Windows systems, however the
+/// |pthread_rwlock_t| that we need is hidden under feature flags, and we can't
+/// ensure that we'll be able to get it. It's statically asserted that this
+/// structure is large enough to contain a |pthread_rwlock_t| by
+/// thread_pthread.c.
+class crypto_mutex_st extends ffi.Union {
+  @ffi.Double()
+  external double alignment;
+
+  @ffi.Array.multi([56])
+  external ffi.Array<ffi.Uint8> padding;
+}
+
+/// AEAD operations.
+class evp_aead_ctx_st_state extends ffi.Union {
+  @ffi.Array.multi([580])
+  external ffi.Array<ffi.Uint8> opaque;
+
+  @ffi.Uint64()
+  external int alignment;
+}
+
+class pthread_attr_t extends ffi.Union {
+  @ffi.Array.multi([56])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int64()
+  external int __align;
+}
+
+class pthread_barrier_t extends ffi.Union {
+  @ffi.Array.multi([32])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int64()
+  external int __align;
+}
+
+class pthread_barrierattr_t extends ffi.Union {
+  @ffi.Array.multi([4])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int32()
+  external int __align;
+}
+
+class pthread_cond_t extends ffi.Union {
+  external __pthread_cond_s __data;
+
+  @ffi.Array.multi([48])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int64()
+  external int __align;
+}
+
+class pthread_condattr_t extends ffi.Union {
+  @ffi.Array.multi([4])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int32()
+  external int __align;
+}
+
+class pthread_mutex_t extends ffi.Union {
+  external __pthread_mutex_s __data;
+
+  @ffi.Array.multi([40])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int64()
+  external int __align;
+}
+
+class pthread_mutexattr_t extends ffi.Union {
+  @ffi.Array.multi([4])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int32()
+  external int __align;
+}
+
+class pthread_rwlock_t extends ffi.Union {
+  external __pthread_rwlock_arch_t __data;
+
+  @ffi.Array.multi([56])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int64()
+  external int __align;
+}
+
+class pthread_rwlockattr_t extends ffi.Union {
+  @ffi.Array.multi([8])
+  external ffi.Array<ffi.Int8> __size;
+
+  @ffi.Int64()
+  external int __align;
+}
+
+/// Function pointer for de-allocation of a pointer, when attaching a finalizer
+/// using webcrypto_attach_finalizer.
+typedef webcrypto_finalizer_t
+    = ffi.Pointer<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>;

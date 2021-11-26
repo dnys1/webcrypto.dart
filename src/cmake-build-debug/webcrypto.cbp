@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="webcrypto"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\third_party\;CMake Files\..\third_party\dart-sdk\;CMake Files\..\third_party\boringssl\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/dillon/dev/webcrypto.dart/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/dillon/dev/webcrypto.dart/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/dillon/dev/webcrypto.dart/src/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="webcrypto">
+				<Option output="/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/libwebcrypto.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dillon/dev/webcrypto.dart/src/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add option="-DOPENSSL_SMALL"/>
+					<Add directory="/home/dillon/dev/webcrypto.dart/src/../third_party/dart-sdk/src/runtime"/>
+					<Add directory="/home/dillon/dev/webcrypto.dart/src/../third_party/boringssl/src/include"/>
+					<Add directory="/home/dillon/dev/dart-sdk/sdk/buildtools/linux-x64/clang/bin/../include/x86_64-unknown-linux-gnu/c++/v1"/>
+					<Add directory="/home/dillon/dev/dart-sdk/sdk/buildtools/linux-x64/clang/bin/../include/c++/v1"/>
+					<Add directory="/home/dillon/dev/dart-sdk/sdk/buildtools/linux-x64/clang/lib/clang/13.0.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 webcrypto"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="webcrypto/fast">
+				<Option output="/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/libwebcrypto.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/dillon/dev/webcrypto.dart/src/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add option="-DOPENSSL_SMALL"/>
+					<Add directory="/home/dillon/dev/webcrypto.dart/src/../third_party/dart-sdk/src/runtime"/>
+					<Add directory="/home/dillon/dev/webcrypto.dart/src/../third_party/boringssl/src/include"/>
+					<Add directory="/home/dillon/dev/dart-sdk/sdk/buildtools/linux-x64/clang/bin/../include/x86_64-unknown-linux-gnu/c++/v1"/>
+					<Add directory="/home/dillon/dev/dart-sdk/sdk/buildtools/linux-x64/clang/bin/../include/c++/v1"/>
+					<Add directory="/home/dillon/dev/dart-sdk/sdk/buildtools/linux-x64/clang/lib/clang/13.0.0/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 webcrypto/fast"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/dillon/dev/webcrypto.dart/src/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/src/symbols.generated.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/src/symbols.h">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/src/webcrypto.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/src/webcrypto_dart_dl.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/src/webcrypto_dart_dl.h">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/err_data.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/chacha/chacha-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/cipher_extra/aes128gcmsiv-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/cipher_extra/chacha20_poly1305_x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/aesni-gcm-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/aesni-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/ghash-ssse3-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/ghash-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/md5-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/p256-x86_64-asm.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/p256_beeu-x86_64-asm.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/rdrand-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/rsaz-avx2.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/sha1-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/sha256-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/sha512-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/vpaes-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/x86_64-mont.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/fipsmodule/x86_64-mont5.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/linux-x86_64/crypto/test/trampoline-x86_64.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_bitstr.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_bool.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_d2i_fp.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_dup.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_enum.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_gentm.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_i2d_fp.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_int.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_mbstr.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_object.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_octet.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_print.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_strnid.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_time.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_type.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_utctm.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/a_utf8.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/asn1_lib.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/asn1_par.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/asn_pack.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/f_enum.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/f_int.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/f_string.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/tasn_dec.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/tasn_enc.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/tasn_fre.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/tasn_new.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/tasn_typ.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/tasn_utl.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/asn1/time_support.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/base64/base64.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/bio.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/bio_mem.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/connect.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/fd.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/file.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/hexdump.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/pair.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/printf.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/socket.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bio/socket_helper.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bn_extra/bn_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bn_extra/convert.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/buf/buf.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bytestring/asn1_compat.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bytestring/ber.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bytestring/cbb.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bytestring/cbs.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/bytestring/unicode.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/chacha/chacha.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/cipher_extra.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/derive_key.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/e_aesccm.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/e_aesctrhmac.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/e_aesgcmsiv.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/e_chacha20poly1305.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/e_null.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/e_rc2.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/e_rc4.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/e_tls.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cipher_extra/tls_cbc.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cmac/cmac.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/conf/conf.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cpu-aarch64-fuchsia.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cpu-aarch64-linux.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cpu-arm-linux.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cpu-arm-linux.h">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cpu-arm.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cpu-intel.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/cpu-ppc64le.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/crypto.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/curve25519/curve25519.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/curve25519/spake25519.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/dh/check.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/dh/dh.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/dh/dh_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/dh/params.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/digest_extra/digest_extra.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/dsa/dsa.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/dsa/dsa_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/ec_extra/ec_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/ec_extra/ec_derive.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/ec_extra/hash_to_curve.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/ecdh_extra/ecdh_extra.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/ecdsa_extra/ecdsa_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/engine/engine.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/err/err.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/digestsign.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/evp.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/evp_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/evp_ctx.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_dsa_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_ec.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_ec_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_ed25519.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_ed25519_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_rsa.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_rsa_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_x25519.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/p_x25519_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/pbkdf.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/print.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/scrypt.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/evp/sign.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/ex_data.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/fipsmodule/bcm.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/fipsmodule/fips_shared_support.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/fipsmodule/is_fips.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/hkdf/hkdf.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/hpke/hpke.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/hrss/asm/poly_rq_mul.S">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/hrss/hrss.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/lhash/lhash.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/mem.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/obj/obj.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/obj/obj_xref.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pem/pem_all.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pem/pem_info.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pem/pem_lib.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pem/pem_oth.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pem/pem_pk8.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pem/pem_pkey.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pem/pem_x509.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pem/pem_xaux.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pkcs7/pkcs7.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pkcs7/pkcs7_x509.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pkcs8/p5_pbev2.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pkcs8/pkcs8.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pkcs8/pkcs8_x509.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/poly1305/poly1305.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/poly1305/poly1305_arm.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/poly1305/poly1305_vec.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/pool/pool.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/rand_extra/deterministic.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/rand_extra/forkunsafe.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/rand_extra/fuchsia.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/rand_extra/rand_extra.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/rand_extra/windows.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/rc4/rc4.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/refcount_c11.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/refcount_lock.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/rsa_extra/rsa_asn1.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/rsa_extra/rsa_print.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/siphash/siphash.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/stack/stack.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/thread.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/thread_none.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/thread_pthread.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/thread_win.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/trust_token/pmbtoken.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/trust_token/trust_token.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/trust_token/voprf.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/a_digest.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/a_sign.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/a_strex.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/a_verify.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/algorithm.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/asn1_gen.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/by_dir.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/by_file.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/i2d_pr.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/rsa_pss.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/t_crl.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/t_req.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/t_x509.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/t_x509a.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_att.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_cmp.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_d2.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_def.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_ext.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_lu.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_obj.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_r2x.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_req.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_set.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_trs.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_txt.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_v3.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_vfy.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509_vpm.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509cset.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509name.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509rset.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x509spki.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_algor.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_all.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_attrib.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_crl.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_exten.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_info.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_name.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_pkey.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_pubkey.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_req.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_sig.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_spki.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_val.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_x509.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509/x_x509a.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/pcy_cache.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/pcy_data.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/pcy_lib.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/pcy_map.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/pcy_node.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/pcy_tree.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_akey.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_akeya.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_alt.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_bcons.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_bitst.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_conf.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_cpols.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_crld.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_enum.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_extku.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_genn.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_ia5.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_info.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_int.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_lib.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_ncons.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_ocsp.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_pci.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_pcia.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_pcons.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_pmaps.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_prn.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_purp.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_skey.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/boringssl/src/crypto/x509v3/v3_utl.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/dart-sdk/src/runtime/include/dart_api_dl.c">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/third_party/dart-sdk/src/runtime/include/dart_api_dl.h">
+			<Option target="webcrypto"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/src/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/src/../third_party/dart-sdk/sources.cmake">
+			<Option virtualFolder="CMake Files\..\third_party\dart-sdk\"/>
+		</Unit>
+		<Unit filename="/home/dillon/dev/webcrypto.dart/src/../third_party/boringssl/sources.cmake">
+			<Option virtualFolder="CMake Files\..\third_party\boringssl\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

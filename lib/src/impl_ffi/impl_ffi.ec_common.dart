@@ -64,15 +64,15 @@ String _ecCurveToJwkCrv(EllipticCurve curve) {
 
 /// Perform some post-import validation for EC keys.
 void _validateEllipticCurveKey(
-  ffi.Pointer<EVP_PKEY> key,
+  EVP_PKEY_Resource res,
   EllipticCurve curve,
 ) {
   final scope = _Scope();
   try {
-    _checkData(ssl.EVP_PKEY_id(key) == EVP_PKEY_EC,
+    _checkData(ssl.EVP_PKEY_id(res.key) == EVP_PKEY_EC,
         message: 'key is not an EC key');
 
-    final ec = ssl.EVP_PKEY_get1_EC_KEY(key);
+    final ec = ssl.EVP_PKEY_get1_EC_KEY(res.key);
     _checkData(ec.address != 0, fallback: 'key is not an EC key');
     scope.defer(() => ssl.EC_KEY_free(ec));
 
@@ -93,19 +93,19 @@ void _validateEllipticCurveKey(
   }
 }
 
-ffi.Pointer<EVP_PKEY> _importPkcs8EcPrivateKey(
+EVP_PKEY_Resource _importPkcs8EcPrivateKey(
   List<int> keyData,
   EllipticCurve curve,
 ) {
   final key = _withDataAsCBS(keyData, ssl.EVP_parse_private_key);
   _checkData(key.address != 0, fallback: 'unable to parse key');
-  _attachFinalizerEVP_PKEY(key);
+  final res = EVP_PKEY_Resource(key);
 
-  _validateEllipticCurveKey(key, curve);
-  return key;
+  _validateEllipticCurveKey(res, curve);
+  return res;
 }
 
-ffi.Pointer<EVP_PKEY> _importSpkiEcPublicKey(
+EVP_PKEY_Resource _importSpkiEcPublicKey(
   List<int> keyData,
   EllipticCurve curve,
 ) {
@@ -114,14 +114,14 @@ ffi.Pointer<EVP_PKEY> _importSpkiEcPublicKey(
   // a FormatException. Notice that this the case for private/public keys, and RSA keys.
   final key = _withDataAsCBS(keyData, ssl.EVP_parse_public_key);
   _checkData(key.address != 0, fallback: 'unable to parse key');
-  _attachFinalizerEVP_PKEY(key);
+  final res = EVP_PKEY_Resource(key);
 
-  _validateEllipticCurveKey(key, curve);
+  _validateEllipticCurveKey(res, curve);
 
-  return key;
+  return res;
 }
 
-ffi.Pointer<EVP_PKEY> _importJwkEcPrivateOrPublicKey(
+EVP_PKEY_Resource _importJwkEcPrivateOrPublicKey(
   JsonWebKey jwk,
   EllipticCurve curve, {
   required bool isPrivateKey,
@@ -212,16 +212,16 @@ ffi.Pointer<EVP_PKEY> _importJwkEcPrivateOrPublicKey(
     _checkDataIsOne(ssl.EC_KEY_check_key(ec), fallback: 'invalid EC key');
 
     // Wrap with an EVP_KEY
-    final key = _createEVP_PKEYwithFinalizer();
-    _checkOpIsOne(ssl.EVP_PKEY_set1_EC_KEY(key, ec));
+    final res = _createEVP_PKEYwithFinalizer();
+    _checkOpIsOne(ssl.EVP_PKEY_set1_EC_KEY(res.key, ec));
 
-    return key;
+    return res;
   } finally {
     scope.release();
   }
 }
 
-ffi.Pointer<EVP_PKEY> _importRawEcPublicKey(
+EVP_PKEY_Resource _importRawEcPublicKey(
   List<int> keyData,
   EllipticCurve curve,
 ) {
@@ -248,11 +248,11 @@ ffi.Pointer<EVP_PKEY> _importRawEcPublicKey(
       _checkDataIsOne(ssl.EC_KEY_set_public_key(ec, pub),
           fallback: 'invalid keyData');
 
-      final key = _createEVP_PKEYwithFinalizer();
-      _checkOpIsOne(ssl.EVP_PKEY_set1_EC_KEY(key, ec));
-      _validateEllipticCurveKey(key, curve);
+      final res = _createEVP_PKEYwithFinalizer();
+      _checkOpIsOne(ssl.EVP_PKEY_set1_EC_KEY(res.key, ec));
+      _validateEllipticCurveKey(res, curve);
 
-      return key;
+      return res;
     } finally {
       ssl.EC_POINT_free(pub);
     }
@@ -340,7 +340,7 @@ Map<String, dynamic> _exportJwkEcPrivateOrPublicKey(
   }
 }
 
-KeyPair<ffi.Pointer<EVP_PKEY>, ffi.Pointer<EVP_PKEY>> _generateEcKeyPair(
+KeyPair<EVP_PKEY_Resource, EVP_PKEY_Resource> _generateEcKeyPair(
   EllipticCurve curve,
 ) {
   final scope = _Scope();
@@ -352,7 +352,7 @@ KeyPair<ffi.Pointer<EVP_PKEY>, ffi.Pointer<EVP_PKEY>> _generateEcKeyPair(
     _checkOpIsOne(ssl.EC_KEY_generate_key(ecPriv));
 
     final privKey = _createEVP_PKEYwithFinalizer();
-    _checkOpIsOne(ssl.EVP_PKEY_set1_EC_KEY(privKey, ecPriv));
+    _checkOpIsOne(ssl.EVP_PKEY_set1_EC_KEY(privKey.key, ecPriv));
 
     final ecPub = ssl.EC_KEY_new_by_curve_name(_ecCurveToNID(curve));
     _checkOp(ecPub.address != 0);
@@ -363,7 +363,7 @@ KeyPair<ffi.Pointer<EVP_PKEY>, ffi.Pointer<EVP_PKEY>> _generateEcKeyPair(
     ));
 
     final pubKey = _createEVP_PKEYwithFinalizer();
-    _checkOpIsOne(ssl.EVP_PKEY_set1_EC_KEY(pubKey, ecPub));
+    _checkOpIsOne(ssl.EVP_PKEY_set1_EC_KEY(pubKey.key, ecPub));
 
     return _KeyPair(
       privateKey: privKey,

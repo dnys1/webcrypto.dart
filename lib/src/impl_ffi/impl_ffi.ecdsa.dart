@@ -193,7 +193,7 @@ Uint8List? _convertEcdsaWebCryptoSignatureToDerSignature(
 }
 
 class _EcdsaPrivateKey implements EcdsaPrivateKey {
-  final ffi.Pointer<EVP_PKEY> _key;
+  final EVP_PKEY_Resource _key;
 
   _EcdsaPrivateKey(this._key);
 
@@ -212,7 +212,7 @@ class _EcdsaPrivateKey implements EcdsaPrivateKey {
 
     final sig = await _withEVP_MD_CTX((ctx) async {
       _checkOpIsOne(
-        ssl.EVP_DigestSignInit(ctx, ffi.nullptr, _hash, ffi.nullptr, _key),
+        ssl.EVP_DigestSignInit(ctx, ffi.nullptr, _hash, ffi.nullptr, _key.key),
       );
 
       await _streamToUpdate(data, ctx, ssl.EVP_DigestSignUpdate);
@@ -225,23 +225,24 @@ class _EcdsaPrivateKey implements EcdsaPrivateKey {
         }).sublist(0, len.value);
       });
     });
-    return _convertEcdsaDerSignatureToWebCryptoSignature(_key, sig);
+    return _convertEcdsaDerSignatureToWebCryptoSignature(_key.key, sig);
   }
 
   @override
   Future<Map<String, dynamic>> exportJsonWebKey() async =>
-      _exportJwkEcPrivateOrPublicKey(_key, isPrivateKey: true, jwkUse: 'sig');
+      _exportJwkEcPrivateOrPublicKey(_key.key,
+          isPrivateKey: true, jwkUse: 'sig');
 
   @override
   Future<Uint8List> exportPkcs8Key() async {
     return _withOutCBB((cbb) {
-      _checkOp(ssl.EVP_marshal_private_key(cbb, _key) == 1);
+      _checkOp(ssl.EVP_marshal_private_key(cbb, _key.key) == 1);
     });
   }
 }
 
 class _EcdsaPublicKey implements EcdsaPublicKey {
-  final ffi.Pointer<EVP_PKEY> _key;
+  final EVP_PKEY_Resource _key;
 
   _EcdsaPublicKey(this._key);
 
@@ -265,7 +266,8 @@ class _EcdsaPublicKey implements EcdsaPublicKey {
     final _hash = _Hash.fromHash(hash).MD;
 
     // Convert to DER signature
-    final sig = _convertEcdsaWebCryptoSignatureToDerSignature(_key, signature);
+    final sig =
+        _convertEcdsaWebCryptoSignatureToDerSignature(_key.key, signature);
     if (sig == null) {
       // If signature format is invalid we fail verification
       return false;
@@ -274,7 +276,7 @@ class _EcdsaPublicKey implements EcdsaPublicKey {
     return await _withEVP_MD_CTX((ctx) async {
       return await _withPEVP_PKEY_CTX((pctx) async {
         _checkOpIsOne(
-          ssl.EVP_DigestVerifyInit(ctx, pctx, _hash, ffi.nullptr, _key),
+          ssl.EVP_DigestVerifyInit(ctx, pctx, _hash, ffi.nullptr, _key.key),
         );
         await _streamToUpdate(data, ctx, ssl.EVP_DigestVerifyUpdate);
         return _withDataAsPointer(sig, (ffi.Pointer<ffi.Uint8> p) {
@@ -294,15 +296,16 @@ class _EcdsaPublicKey implements EcdsaPublicKey {
 
   @override
   Future<Map<String, dynamic>> exportJsonWebKey() async =>
-      _exportJwkEcPrivateOrPublicKey(_key, isPrivateKey: false, jwkUse: 'sig');
+      _exportJwkEcPrivateOrPublicKey(_key.key,
+          isPrivateKey: false, jwkUse: 'sig');
 
   @override
-  Future<Uint8List> exportRawKey() async => _exportRawEcPublicKey(_key);
+  Future<Uint8List> exportRawKey() async => _exportRawEcPublicKey(_key.key);
 
   @override
   Future<Uint8List> exportSpkiKey() async {
     return _withOutCBB((cbb) {
-      _checkOp(ssl.EVP_marshal_public_key(cbb, _key) == 1);
+      _checkOp(ssl.EVP_marshal_public_key(cbb, _key.key) == 1);
     });
   }
 }

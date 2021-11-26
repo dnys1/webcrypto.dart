@@ -176,7 +176,7 @@ Future<Uint8List> _rsaOaepeEncryptOrDecryptBytes(
 }
 
 class _RsaOaepPrivateKey implements RsaOaepPrivateKey {
-  final ffi.Pointer<EVP_PKEY> _key;
+  final EVP_PKEY_Resource _key;
   final _Hash _hash;
 
   _RsaOaepPrivateKey(this._key, this._hash);
@@ -184,7 +184,7 @@ class _RsaOaepPrivateKey implements RsaOaepPrivateKey {
   @override
   Future<Uint8List> decryptBytes(List<int> data, {List<int>? label}) async {
     return _rsaOaepeEncryptOrDecryptBytes(
-      _key,
+      _key.key,
       _hash.MD,
       ssl.EVP_PKEY_decrypt_init,
       ssl.EVP_PKEY_decrypt,
@@ -196,7 +196,7 @@ class _RsaOaepPrivateKey implements RsaOaepPrivateKey {
   @override
   Future<Map<String, dynamic>> exportJsonWebKey() async =>
       _exportJwkRsaPrivateOrPublicKey(
-        _key,
+        _key.key,
         isPrivateKey: true,
         jwkUse: 'enc',
         jwkAlg: _rsaOaepJwkAlgFromHash(_hash),
@@ -205,13 +205,13 @@ class _RsaOaepPrivateKey implements RsaOaepPrivateKey {
   @override
   Future<Uint8List> exportPkcs8Key() async {
     return _withOutCBB((cbb) {
-      _checkOp(ssl.EVP_marshal_private_key(cbb, _key) == 1);
+      _checkOp(ssl.EVP_marshal_private_key(cbb, _key.key) == 1);
     });
   }
 }
 
 class _RsaOaepPublicKey implements RsaOaepPublicKey {
-  final ffi.Pointer<EVP_PKEY> _key;
+  final EVP_PKEY_Resource _key;
   final _Hash _hash;
 
   _RsaOaepPublicKey(this._key, this._hash);
@@ -219,7 +219,7 @@ class _RsaOaepPublicKey implements RsaOaepPublicKey {
   @override
   Future<Uint8List> encryptBytes(List<int> data, {List<int>? label}) async {
     return _rsaOaepeEncryptOrDecryptBytes(
-      _key,
+      _key.key,
       _hash.MD,
       ssl.EVP_PKEY_encrypt_init,
       ssl.EVP_PKEY_encrypt,
@@ -231,7 +231,7 @@ class _RsaOaepPublicKey implements RsaOaepPublicKey {
   @override
   Future<Map<String, dynamic>> exportJsonWebKey() async =>
       _exportJwkRsaPrivateOrPublicKey(
-        _key,
+        _key.key,
         isPrivateKey: false,
         jwkUse: 'enc',
         jwkAlg: _rsaOaepJwkAlgFromHash(_hash),
@@ -240,7 +240,7 @@ class _RsaOaepPublicKey implements RsaOaepPublicKey {
   @override
   Future<Uint8List> exportSpkiKey() async {
     return _withOutCBB((cbb) {
-      _checkOp(ssl.EVP_marshal_public_key(cbb, _key) == 1);
+      _checkOp(ssl.EVP_marshal_public_key(cbb, _key.key) == 1);
     });
   }
 }

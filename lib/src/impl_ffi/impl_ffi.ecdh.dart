@@ -67,7 +67,7 @@ Future<EcdhPublicKey> ecdhPublicKey_importJsonWebKey(
     ));
 
 class _EcdhPrivateKey implements EcdhPrivateKey {
-  final ffi.Pointer<EVP_PKEY> _key;
+  final EVP_PKEY_Resource _key;
 
   _EcdhPrivateKey(this._key);
 
@@ -88,11 +88,11 @@ class _EcdhPrivateKey implements EcdhPrivateKey {
 
     final scope = _Scope();
     try {
-      final pubEcKey = ssl.EVP_PKEY_get1_EC_KEY(publicKey._key);
+      final pubEcKey = ssl.EVP_PKEY_get1_EC_KEY(publicKey._key.key);
       _checkOp(pubEcKey.address != 0, fallback: 'not an ec key');
       scope.defer(() => ssl.EC_KEY_free(pubEcKey));
 
-      final privEcKey = ssl.EVP_PKEY_get1_EC_KEY(_key);
+      final privEcKey = ssl.EVP_PKEY_get1_EC_KEY(_key.key);
       _checkOp(privEcKey.address != 0, fallback: 'not an ec key');
       scope.defer(() => ssl.EC_KEY_free(privEcKey));
 
@@ -159,18 +159,19 @@ class _EcdhPrivateKey implements EcdhPrivateKey {
       // omit it for better interoperability. Chrome incorrectly forbids during
       // import (though we strip 'use' to mitigate this).
       // See also: https://crbug.com/641499 (and importJsonWebKey in JS)
-      _exportJwkEcPrivateOrPublicKey(_key, isPrivateKey: true, jwkUse: null);
+      _exportJwkEcPrivateOrPublicKey(_key.key,
+          isPrivateKey: true, jwkUse: null);
 
   @override
   Future<Uint8List> exportPkcs8Key() async {
     return _withOutCBB((cbb) {
-      _checkOp(ssl.EVP_marshal_private_key(cbb, _key) == 1);
+      _checkOp(ssl.EVP_marshal_private_key(cbb, _key.key) == 1);
     });
   }
 }
 
 class _EcdhPublicKey implements EcdhPublicKey {
-  final ffi.Pointer<EVP_PKEY> _key;
+  final EVP_PKEY_Resource _key;
 
   _EcdhPublicKey(this._key);
 
@@ -180,15 +181,16 @@ class _EcdhPublicKey implements EcdhPublicKey {
       // omit it for better interoperability. Chrome incorrectly forbids during
       // import (though we strip 'use' to mitigate this).
       // See also: https://crbug.com/641499 (and importJsonWebKey in JS)
-      _exportJwkEcPrivateOrPublicKey(_key, isPrivateKey: false, jwkUse: null);
+      _exportJwkEcPrivateOrPublicKey(_key.key,
+          isPrivateKey: false, jwkUse: null);
 
   @override
-  Future<Uint8List> exportRawKey() async => _exportRawEcPublicKey(_key);
+  Future<Uint8List> exportRawKey() async => _exportRawEcPublicKey(_key.key);
 
   @override
   Future<Uint8List> exportSpkiKey() async {
     return _withOutCBB((cbb) {
-      _checkOp(ssl.EVP_marshal_public_key(cbb, _key) == 1);
+      _checkOp(ssl.EVP_marshal_public_key(cbb, _key.key) == 1);
     });
   }
 }

@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:io' show Platform, Directory, File;
+import 'dart:io' show Directory, File, Platform, Process;
 import 'dart:ffi';
 
 import 'symbols.generated.dart';
@@ -109,6 +109,11 @@ Uri? _findDotDartTool() {
   } else {
     root = Platform.script.resolve('./');
   }
+  print('Root: $root');
+  final out = Process.runSync('ls', [
+    root.path,
+  ]);
+  print(out.stdout);
 
   // Traverse up until we see a `.dart_tool/package_config.json` file.
   do {

@@ -14,40 +14,43 @@
 
 part of impl_ffi;
 
-/// Attach a finalizer for [key], this means that [ssl.EVP_PKEY_free] will
-/// automatically be called with [key] is garbage collected by Dart.
-///
-/// This takes ownership of [key], and the caller **may not** call
-/// [ssl.EVP_PKEY_free].
-///
-/// Callers should be ware that the Dart GC may collect [key] as soon as it
-/// deems the object to not be in use anymore. This can happy at any point when
-/// the VM (optimizer) determines that no code-path passing [key] to an FFI
-/// function can be called again. For this reason, users should take extra care
-/// to make sure that all accesses to [key] takes an extra reference.
-void _attachFinalizerEVP_PKEY(ffi.Pointer<EVP_PKEY> key) {
-  final ret = dl.webcrypto_dart_dl_attach_finalizer(
-    key,
-    key.cast(),
-    ssl.addresses.EVP_PKEY_free.cast(),
-    // We don't really have an estimate of how much space the EVP_PKEY structure
-    // takes up, but if we make it some non-trivial size then hopefully the GC
-    // will prioritize freeing them.
-    4096,
-  );
-  if (ret != 1) {
-    throw AssertionError('package:webcrypto failed to attached finalizer');
+class EVP_PKEY_Resource {
+  final ffi.Pointer<EVP_PKEY> key;
+
+  /// Attach a finalizer for [key], this means that [ssl.EVP_PKEY_free] will
+  /// automatically be called with [key] is garbage collected by Dart.
+  ///
+  /// This takes ownership of [key], and the caller **may not** call
+  /// [ssl.EVP_PKEY_free].
+  ///
+  /// Callers should be ware that the Dart GC may collect [key] as soon as it
+  /// deems the object to not be in use anymore. This can happy at any point when
+  /// the VM (optimizer) determines that no code-path passing [key] to an FFI
+  /// function can be called again. For this reason, users should take extra care
+  /// to make sure that all accesses to [key] takes an extra reference.
+  EVP_PKEY_Resource(this.key) {
+    final ret = dl.webcrypto_dart_dl_attach_finalizer(
+      this,
+      key.cast(),
+      ssl.addresses.EVP_PKEY_free.cast(),
+      // We don't really have an estimate of how much space the EVP_PKEY structure
+      // takes up, but if we make it some non-trivial size then hopefully the GC
+      // will prioritize freeing them.
+      4096,
+    );
+    if (ret != 1) {
+      throw AssertionError('package:webcrypto failed to attached finalizer');
+    }
   }
 }
 
 /// Create an [ssl.EVP_PKEY] with finalizer attached.
 ///
 /// See [_attachFinalizerEVP_PKEY] for notes on how the finalizer works.
-ffi.Pointer<EVP_PKEY> _createEVP_PKEYwithFinalizer() {
+EVP_PKEY_Resource _createEVP_PKEYwithFinalizer() {
   final key = ssl.EVP_PKEY_new();
   _checkOp(key.address != 0, fallback: 'allocation failure');
-  _attachFinalizerEVP_PKEY(key);
-  return key;
+  return EVP_PKEY_Resource(key);
 }
 
 /// Throw [OperationError] if [condition] is `false`.

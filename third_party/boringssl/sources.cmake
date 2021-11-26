@@ -127,6 +127,7 @@ set(crypto_sources
   ${BORINGSSL_ROOT}src/crypto/fipsmodule/fips_shared_support.c
   ${BORINGSSL_ROOT}src/crypto/fipsmodule/is_fips.c
   ${BORINGSSL_ROOT}src/crypto/hkdf/hkdf.c
+  ${BORINGSSL_ROOT}src/crypto/hpke/hpke.c
   ${BORINGSSL_ROOT}src/crypto/hrss/hrss.c
   ${BORINGSSL_ROOT}src/crypto/lhash/lhash.c
   ${BORINGSSL_ROOT}src/crypto/mem.c
@@ -167,6 +168,7 @@ set(crypto_sources
   ${BORINGSSL_ROOT}src/crypto/thread_win.c
   ${BORINGSSL_ROOT}src/crypto/trust_token/pmbtoken.c
   ${BORINGSSL_ROOT}src/crypto/trust_token/trust_token.c
+  ${BORINGSSL_ROOT}src/crypto/trust_token/voprf.c
   ${BORINGSSL_ROOT}src/crypto/x509/a_digest.c
   ${BORINGSSL_ROOT}src/crypto/x509/a_sign.c
   ${BORINGSSL_ROOT}src/crypto/x509/a_strex.c
@@ -242,12 +244,10 @@ set(crypto_sources
   ${BORINGSSL_ROOT}src/crypto/x509v3/v3_pci.c
   ${BORINGSSL_ROOT}src/crypto/x509v3/v3_pcia.c
   ${BORINGSSL_ROOT}src/crypto/x509v3/v3_pcons.c
-  ${BORINGSSL_ROOT}src/crypto/x509v3/v3_pku.c
   ${BORINGSSL_ROOT}src/crypto/x509v3/v3_pmaps.c
   ${BORINGSSL_ROOT}src/crypto/x509v3/v3_prn.c
   ${BORINGSSL_ROOT}src/crypto/x509v3/v3_purp.c
   ${BORINGSSL_ROOT}src/crypto/x509v3/v3_skey.c
-  ${BORINGSSL_ROOT}src/crypto/x509v3/v3_sxnet.c
   ${BORINGSSL_ROOT}src/crypto/x509v3/v3_utl.c
 )
 

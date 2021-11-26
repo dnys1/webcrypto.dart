@@ -1,0 +1,4 @@
+/snap/clion/169/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/home/dillon/dev/dart-sdk/sdk/buildtools/linux-x64/clang/bin/clang -DCMAKE_CXX_COMPILER=/home/dillon/dev/dart-sdk/sdk/buildtools/linux-x64/clang/bin/clang++ -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/dillon/dev/webcrypto.dart/src
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/dillon/dev/webcrypto.dart/src/cmake-build-debug

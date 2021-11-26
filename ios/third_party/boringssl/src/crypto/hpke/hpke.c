@@ -19,4 +19,4 @@
 // This file is generated using:
 // `tool/update-boringssl.py`
 
-#include "../../../../../../third_party/boringssl/src/crypto/x509v3/v3_pku.c"
+#include "../../../../../../third_party/boringssl/src/crypto/hpke/hpke.c"

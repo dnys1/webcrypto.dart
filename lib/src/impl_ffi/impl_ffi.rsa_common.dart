@@ -14,12 +14,12 @@
 
 part of impl_ffi;
 
-ffi.Pointer<EVP_PKEY> _importPkcs8RsaPrivateKey(List<int> keyData) {
+EVP_PKEY_Resource _importPkcs8RsaPrivateKey(List<int> keyData) {
   final scope = _Scope();
   try {
     final key = _withDataAsCBS(keyData, ssl.EVP_parse_private_key);
     _checkData(key.address != 0, fallback: 'unable to parse key');
-    _attachFinalizerEVP_PKEY(key);
+    final res = EVP_PKEY_Resource(key);
 
     _checkData(ssl.EVP_PKEY_id(key) == EVP_PKEY_RSA,
         message: 'key is not an RSA key');
@@ -30,18 +30,18 @@ ffi.Pointer<EVP_PKEY> _importPkcs8RsaPrivateKey(List<int> keyData) {
 
     _checkData(ssl.RSA_check_key(rsa) == 1, fallback: 'invalid key');
 
-    return key;
+    return res;
   } finally {
     scope.release();
   }
 }
 
-ffi.Pointer<EVP_PKEY> _importSpkiRsaPublicKey(List<int> keyData) {
+EVP_PKEY_Resource _importSpkiRsaPublicKey(List<int> keyData) {
   final scope = _Scope();
   try {
     final key = _withDataAsCBS(keyData, ssl.EVP_parse_public_key);
     _checkData(key.address != 0, fallback: 'unable to parse key');
-    _attachFinalizerEVP_PKEY(key);
+    final res = EVP_PKEY_Resource(key);
 
     _checkData(ssl.EVP_PKEY_id(key) == EVP_PKEY_RSA,
         message: 'key is not an RSA key');
@@ -52,13 +52,13 @@ ffi.Pointer<EVP_PKEY> _importSpkiRsaPublicKey(List<int> keyData) {
 
     _checkData(ssl.RSA_check_key(rsa) == 1, fallback: 'invalid key');
 
-    return key;
+    return res;
   } finally {
     scope.release();
   }
 }
 
-ffi.Pointer<EVP_PKEY> _importJwkRsaPrivateOrPublicKey(
+EVP_PKEY_Resource _importJwkRsaPrivateOrPublicKey(
   JsonWebKey jwk, {
   required bool isPrivateKey,
   required String expectedAlg,
@@ -164,7 +164,7 @@ ffi.Pointer<EVP_PKEY> _importJwkRsaPrivateOrPublicKey(
     _checkDataIsOne(ssl.RSA_check_key(rsa), fallback: 'invalid RSA key');
 
     final key = _createEVP_PKEYwithFinalizer();
-    _checkOpIsOne(ssl.EVP_PKEY_set1_RSA(key, rsa));
+    _checkOpIsOne(ssl.EVP_PKEY_set1_RSA(key.key, rsa));
 
     return key;
   } finally {
@@ -241,7 +241,7 @@ Map<String, dynamic> _exportJwkRsaPrivateOrPublicKey(
   }
 }
 
-_KeyPair<ffi.Pointer<EVP_PKEY>, ffi.Pointer<EVP_PKEY>> _generateRsaKeyPair(
+_KeyPair<EVP_PKEY_Resource, EVP_PKEY_Resource> _generateRsaKeyPair(
   int modulusLength,
   BigInt publicExponent,
 ) {
@@ -285,11 +285,11 @@ _KeyPair<ffi.Pointer<EVP_PKEY>, ffi.Pointer<EVP_PKEY>> _generateRsaKeyPair(
 
     // Create private key
     final privKey = _createEVP_PKEYwithFinalizer();
-    _checkOp(ssl.EVP_PKEY_set1_RSA(privKey, privRSA) == 1);
+    _checkOp(ssl.EVP_PKEY_set1_RSA(privKey.key, privRSA) == 1);
 
     // Create public key
     final pubKey = _createEVP_PKEYwithFinalizer();
-    _checkOp(ssl.EVP_PKEY_set1_RSA(pubKey, pubRSA) == 1);
+    _checkOp(ssl.EVP_PKEY_set1_RSA(pubKey.key, pubRSA) == 1);
 
     return _KeyPair(
       privateKey: privKey,

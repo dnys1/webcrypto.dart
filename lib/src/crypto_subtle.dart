@@ -132,7 +132,7 @@ class Algorithm {
   });
 }
 
-JsonWebKey jsonWebKeyFromJs(dynamic obj) {
+JsonWebKey jsonWebKeyFromJs(Object obj) {
   final json = jsonDecode(_stringify(obj));
   try {
     return JsonWebKey.fromJson(json);
@@ -144,7 +144,7 @@ JsonWebKey jsonWebKeyFromJs(dynamic obj) {
   }
 }
 
-dynamic jsonWebKeytoJs(JsonWebKey k) => js_util.jsify(k.toJson());
+Object jsonWebKeytoJs(JsonWebKey k) => js_util.jsify(k.toJson());
 
 @JS('crypto.getRandomValues')
 external Promise<ByteBuffer> getRandomValues(TypedData array);
@@ -170,7 +170,7 @@ external Promise<ByteBuffer> exportKey(
 );
 
 @JS('crypto.subtle.exportKey')
-external Promise<dynamic> exportJsonWebKey(
+external Promise<Object> exportJsonWebKey(
   String format,
   CryptoKey key,
 );
@@ -204,7 +204,7 @@ external Promise<CryptoKey> importKey(
 @JS('crypto.subtle.importKey')
 external Promise<CryptoKey> importJsonWebKey(
   String format,
-  dynamic jwk,
+  Object jwk,
   Algorithm algorithm,
   bool extractable,
   List<String> usages,
@@ -233,7 +233,7 @@ external Promise<ByteBuffer> deriveBits(
 );
 
 @JS('JSON.stringify')
-external String _stringify(dynamic object);
+external String _stringify(Object object);
 
 // TODO: crypto.subtle.unwrapKey
 // TODO: crypto.subtle.wrapKey

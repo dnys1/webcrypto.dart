@@ -99,7 +99,7 @@ Future<RsassaPkcs1V15PublicKey> rsassaPkcs1V15PublicKey_importJsonWebKey(
 }
 
 class _RsassaPkcs1V15PrivateKey implements RsassaPkcs1V15PrivateKey {
-  final ffi.Pointer<EVP_PKEY> _key;
+  final EVP_PKEY_Resource _key;
   final _Hash _hash;
 
   _RsassaPkcs1V15PrivateKey(this._key, this._hash);
@@ -117,7 +117,7 @@ class _RsassaPkcs1V15PrivateKey implements RsassaPkcs1V15PrivateKey {
     return _withEVP_MD_CTX((ctx) async {
       return await _withPEVP_PKEY_CTX((pctx) async {
         _checkOpIsOne(
-          ssl.EVP_DigestSignInit(ctx, pctx, _hash.MD, ffi.nullptr, _key),
+          ssl.EVP_DigestSignInit(ctx, pctx, _hash.MD, ffi.nullptr, _key.key),
         );
         _checkOpIsOne(
           ssl.EVP_PKEY_CTX_set_rsa_padding(pctx.value, RSA_PKCS1_PADDING),
@@ -138,7 +138,7 @@ class _RsassaPkcs1V15PrivateKey implements RsassaPkcs1V15PrivateKey {
   @override
   Future<Map<String, dynamic>> exportJsonWebKey() async =>
       _exportJwkRsaPrivateOrPublicKey(
-        _key,
+        _key.key,
         isPrivateKey: true,
         jwkAlg: _rsassaPkcs1V15JwkAlgFromHash(_hash),
         jwkUse: 'sig',
@@ -147,13 +147,13 @@ class _RsassaPkcs1V15PrivateKey implements RsassaPkcs1V15PrivateKey {
   @override
   Future<Uint8List> exportPkcs8Key() async {
     return _withOutCBB((cbb) {
-      _checkOp(ssl.EVP_marshal_private_key(cbb, _key) == 1);
+      _checkOp(ssl.EVP_marshal_private_key(cbb, _key.key) == 1);
     });
   }
 }
 
 class _RsassaPkcs1V15PublicKey implements RsassaPkcs1V15PublicKey {
-  final ffi.Pointer<EVP_PKEY> _key;
+  final EVP_PKEY_Resource _key;
   final _Hash _hash;
 
   _RsassaPkcs1V15PublicKey(this._key, this._hash);
@@ -173,7 +173,7 @@ class _RsassaPkcs1V15PublicKey implements RsassaPkcs1V15PublicKey {
     return _withEVP_MD_CTX((ctx) async {
       return _withPEVP_PKEY_CTX((pctx) async {
         _checkOpIsOne(
-          ssl.EVP_DigestVerifyInit(ctx, pctx, _hash.MD, ffi.nullptr, _key),
+          ssl.EVP_DigestVerifyInit(ctx, pctx, _hash.MD, ffi.nullptr, _key.key),
         );
         _checkOpIsOne(
           ssl.EVP_PKEY_CTX_set_rsa_padding(pctx.value, RSA_PKCS1_PADDING),
@@ -197,7 +197,7 @@ class _RsassaPkcs1V15PublicKey implements RsassaPkcs1V15PublicKey {
   @override
   Future<Map<String, dynamic>> exportJsonWebKey() async =>
       _exportJwkRsaPrivateOrPublicKey(
-        _key,
+        _key.key,
         isPrivateKey: false,
         jwkAlg: _rsassaPkcs1V15JwkAlgFromHash(_hash),
         jwkUse: 'sig',
@@ -206,7 +206,7 @@ class _RsassaPkcs1V15PublicKey implements RsassaPkcs1V15PublicKey {
   @override
   Future<Uint8List> exportSpkiKey() async {
     return _withOutCBB((cbb) {
-      _checkOp(ssl.EVP_marshal_public_key(cbb, _key) == 1);
+      _checkOp(ssl.EVP_marshal_public_key(cbb, _key.key) == 1);
     });
   }
 }
