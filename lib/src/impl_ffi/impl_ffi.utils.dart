@@ -19,15 +19,9 @@ part of impl_ffi;
 /// Wrapper around [EVP_PKEY] which attaches finalizer and ensure that the
 /// [ffi.Finalizable] is kept in scope while the [EVP_PKEY] is used.
 class _EvpPKey implements ffi.Finalizable {
-  /// We don't really have an estimate of how much space the EVP_PKEY structure
-  /// takes up, but if we make it some non-trivial size then hopefully the GC
-  /// will prioritize freeing them.
-  static const _externalSizeEstimate = 4096;
+  static final _finalizer = Finalizer(ssl.EVP_PKEY_free);
 
-  static final _finalizer =
-      ffi.NativeFinalizer(ssl.addresses.EVP_PKEY_free.cast());
-
-  final ffi.Pointer<EVP_PKEY> _pkey;
+  final ffi.Pointer<ssl.EVP_PKEY> _pkey;
 
   /// Allocate new [EVP_PKEY], attach finalizer and return the wrapped key.
   factory _EvpPKey() {
@@ -42,32 +36,32 @@ class _EvpPKey implements ffi.Finalizable {
   /// [use]. Otherwise, the garbage collect may be calling the finalizer while
   /// the key is in use.
   _EvpPKey.wrap(this._pkey) {
-    _finalizer.attach(this, _pkey.cast(), externalSize: _externalSizeEstimate);
+    _finalizer.attach(this, _pkey.cast());
   }
 
   /// Use the wrapped [EVP_PKEY] in callback [fn].
   ///
   /// Note. [fn] is not allowed to return a [Future].
-  T use<T>(T Function(ffi.Pointer<EVP_PKEY> pkey) fn) => fn(_pkey);
+  T use<T>(T Function(ffi.Pointer<ssl.EVP_PKEY> pkey) fn) => fn(_pkey);
 }
 
 /// Extension of native function that takes a [EVP_PKEY], making it easy to call
 /// using a wrapped [_EvpPKey].
-extension<T> on T Function(ffi.Pointer<EVP_PKEY>) {
+extension<T> on T Function(ffi.Pointer<ssl.EVP_PKEY>) {
   /// Invoke this function with unwrapped [key].
   T invoke(_EvpPKey key) => key.use((pkey) => this(pkey));
 }
 
 /// Extension of native function that takes a [EVP_PKEY], making it easy to call
 /// using a wrapped [_EvpPKey].
-extension<T, A1> on T Function(ffi.Pointer<EVP_PKEY>, A1) {
+extension<T, A1> on T Function(ffi.Pointer<ssl.EVP_PKEY>, A1) {
   /// Invoke this function with unwrapped [key].
   T invoke(_EvpPKey key, A1 arg1) => key.use((pkey) => this(pkey, arg1));
 }
 
 /// Extension of native function that takes a [EVP_PKEY], making it easy to call
 /// using a wrapped [_EvpPKey].
-extension<T, A1> on T Function(A1, ffi.Pointer<EVP_PKEY>) {
+extension<T, A1> on T Function(A1, ffi.Pointer<ssl.EVP_PKEY>) {
   /// Invoke this function with unwrapped [key].
   T invoke(A1 arg1, _EvpPKey key) => key.use((pkey) => this(arg1, pkey));
 }
@@ -75,7 +69,7 @@ extension<T, A1> on T Function(A1, ffi.Pointer<EVP_PKEY>) {
 /// Extension of native function that takes a [EVP_PKEY], making it easy to call
 /// using a wrapped [_EvpPKey].
 extension<T, A1, A2, A3, A4> on T Function(
-    A1, A2, A3, A4, ffi.Pointer<EVP_PKEY>) {
+    A1, A2, A3, A4, ffi.Pointer<ssl.EVP_PKEY>) {
   /// Invoke this function with unwrapped [key].
   T invoke(
     A1 arg1,
@@ -310,21 +304,21 @@ class _Scope implements Allocator {
 }
 
 extension on _Scope {
-  ffi.Pointer<RSA> createRSA() => create(ssl.RSA_new, ssl.RSA_free);
+  ffi.Pointer<ssl.RSA> createRSA() => create(ssl.RSA_new, ssl.RSA_free);
 
-  ffi.Pointer<BIGNUM> createBN() => create(ssl.BN_new, ssl.BN_free);
+  ffi.Pointer<ssl.BIGNUM> createBN() => create(ssl.BN_new, ssl.BN_free);
 
-  ffi.Pointer<EVP_CIPHER_CTX> createEVP_CIPHER_CTX() =>
+  ffi.Pointer<ssl.EVP_CIPHER_CTX> createEVP_CIPHER_CTX() =>
       create(ssl.EVP_CIPHER_CTX_new, ssl.EVP_CIPHER_CTX_free);
 
-  ffi.Pointer<CBS> createCBS(List<int> data) {
-    final cbs = this<CBS>();
+  ffi.Pointer<ssl.CBS> createCBS(List<int> data) {
+    final cbs = this<ssl.CBS>();
     ssl.CBS_init(cbs, dataAsPointer(data), data.length);
     return cbs;
   }
 
-  ffi.Pointer<CBB> createCBB([int sizeHint = 4096]) {
-    final cbb = this<CBB>();
+  ffi.Pointer<ssl.CBB> createCBB([int sizeHint = 4096]) {
+    final cbb = this<ssl.CBB>();
     ssl.CBB_zero(cbb);
     _checkOp(ssl.CBB_init(cbb, sizeHint) == 1, fallback: 'allocation failure');
     defer(() => ssl.CBB_cleanup(cbb));
@@ -332,8 +326,8 @@ extension on _Scope {
   }
 }
 
-extension on ffi.Pointer<CBB> {
-  /// Copy contents of this [CBB] to a [Uint8List].
+extension on ffi.Pointer<ssl.CBB> {
+  /// Copy contents of this [ssl.CBB] to a [Uint8List].
   Uint8List copy() {
     _checkOp(ssl.CBB_flush(this) == 1);
     final bytes = ssl.CBB_data(this);
@@ -377,14 +371,14 @@ Future<void> _streamToUpdate<T, S extends ffi.NativeType>(
 /// using [config].
 Future<Uint8List> _signStream(
   _EvpPKey key,
-  ffi.Pointer<EVP_MD> md,
+  ffi.Pointer<ssl.EVP_MD> md,
   Stream<List<int>> data, {
-  void Function(ffi.Pointer<EVP_PKEY_CTX> ctx)? config,
+  void Function(ffi.Pointer<ssl.EVP_PKEY_CTX> ctx)? config,
 }) {
   return _Scope.async((scope) async {
     final ctx = scope.create(ssl.EVP_MD_CTX_new, ssl.EVP_MD_CTX_free);
     final pctx =
-        config != null ? scope<ffi.Pointer<EVP_PKEY_CTX>>() : ffi.nullptr;
+        config != null ? scope<ffi.Pointer<ssl.EVP_PKEY_CTX>>() : ffi.nullptr;
     _checkOpIsOne(ssl.EVP_DigestSignInit.invoke(
       ctx,
       pctx,
@@ -414,16 +408,16 @@ Future<Uint8List> _signStream(
 /// configuration specified using [config].
 Future<bool> _verifyStream(
   _EvpPKey key,
-  ffi.Pointer<EVP_MD> md,
+  ffi.Pointer<ssl.EVP_MD> md,
   List<int> signature,
   Stream<List<int>> data, {
-  void Function(ffi.Pointer<EVP_PKEY_CTX> ctx)? config,
+  void Function(ffi.Pointer<ssl.EVP_PKEY_CTX> ctx)? config,
 }) {
   return _Scope.async((scope) async {
     // Create and initialize verification context
     final ctx = scope.create(ssl.EVP_MD_CTX_new, ssl.EVP_MD_CTX_free);
     final pctx =
-        config != null ? scope<ffi.Pointer<EVP_PKEY_CTX>>() : ffi.nullptr;
+        config != null ? scope<ffi.Pointer<ssl.EVP_PKEY_CTX>>() : ffi.nullptr;
     _checkOpIsOne(ssl.EVP_DigestVerifyInit.invoke(
       ctx,
       pctx,

@@ -107,18 +107,17 @@ Future<RsaOaepPublicKey> rsaOaepPublicKey_importJsonWebKey(
 ///  * [encryptOrDecryptFn] as [ssl.EVP_PKEY_encrypt] or [ssl.EVP_PKEY_decrypt].
 Future<Uint8List> _rsaOaepeEncryptOrDecryptBytes(
   _EvpPKey key,
-  ffi.Pointer<EVP_MD> md,
+  ffi.Pointer<ssl.EVP_MD> md,
   // ssl.EVP_PKEY_encrypt_init
-  int Function(ffi.Pointer<EVP_PKEY_CTX>) initFn,
+  int Function(ffi.Pointer<ssl.EVP_PKEY_CTX>) initFn,
   // ssl.EVP_PKEY_encrypt
   int Function(
-    ffi.Pointer<EVP_PKEY_CTX>,
+    ffi.Pointer<ssl.EVP_PKEY_CTX>,
     ffi.Pointer<ffi.Uint8>,
     ffi.Pointer<ffi.Size>,
     ffi.Pointer<ffi.Uint8>,
     int,
-  )
-      encryptOrDecryptFn,
+  ) encryptOrDecryptFn,
   List<int> data, {
   List<int>? label,
 }) async {
@@ -130,7 +129,7 @@ Future<Uint8List> _rsaOaepeEncryptOrDecryptBytes(
     _checkOpIsOne(initFn(ctx));
     _checkOpIsOne(ssl.EVP_PKEY_CTX_set_rsa_padding(
       ctx,
-      RSA_PKCS1_OAEP_PADDING,
+      ssl.RSA_PKCS1_OAEP_PADDING,
     ));
     _checkOpIsOne(ssl.EVP_PKEY_CTX_set_rsa_oaep_md(ctx, md));
     _checkOpIsOne(ssl.EVP_PKEY_CTX_set_rsa_mgf1_md(ctx, md));

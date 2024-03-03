@@ -20,7 +20,7 @@ _EvpPKey _importPkcs8RsaPrivateKey(List<int> keyData) {
     _checkData(k.address != 0, fallback: 'unable to parse key');
     final key = _EvpPKey.wrap(k);
 
-    _checkData(ssl.EVP_PKEY_id.invoke(key) == EVP_PKEY_RSA,
+    _checkData(ssl.EVP_PKEY_id.invoke(key) == ssl.EVP_PKEY_RSA,
         message: 'key is not an RSA key');
 
     final rsa = ssl.EVP_PKEY_get1_RSA.invoke(key);
@@ -39,7 +39,7 @@ _EvpPKey _importSpkiRsaPublicKey(List<int> keyData) {
     _checkData(k.address != 0, fallback: 'unable to parse key');
     final key = _EvpPKey.wrap(k);
 
-    _checkData(ssl.EVP_PKEY_id.invoke(key) == EVP_PKEY_RSA,
+    _checkData(ssl.EVP_PKEY_id.invoke(key) == ssl.EVP_PKEY_RSA,
         message: 'key is not an RSA key');
 
     final rsa = ssl.EVP_PKEY_get1_RSA.invoke(key);
@@ -85,7 +85,7 @@ _EvpPKey _importJwkRsaPrivateOrPublicKey(
     // TODO: Consider rejecting keys with key_ops inconsistent with isPrivateKey
     //       See also JWK import logic for EC keys
 
-    ffi.Pointer<BIGNUM> readBN(String value, String prop) {
+    ffi.Pointer<ssl.BIGNUM> readBN(String value, String prop) {
       final bin = _jwkDecodeBase64UrlNoPadding(value, prop);
       checkJwk(bin.isNotEmpty, prop, 'must not be empty');
       checkJwk(
@@ -174,7 +174,7 @@ Map<String, dynamic> _exportJwkRsaPrivateOrPublicKey(
     _checkOp(rsa.address != 0, fallback: 'internal key type error');
     scope.defer(() => ssl.RSA_free(rsa));
 
-    String encodeBN(ffi.Pointer<BIGNUM> bn) {
+    String encodeBN(ffi.Pointer<ssl.BIGNUM> bn) {
       final N = ssl.BN_num_bytes(bn);
       final out = scope<ffi.Uint8>(N);
       _checkOpIsOne(ssl.BN_bn2bin_padded(out, N, bn));
@@ -184,8 +184,8 @@ Map<String, dynamic> _exportJwkRsaPrivateOrPublicKey(
     }
 
     // Public key parameters
-    final n = scope<ffi.Pointer<BIGNUM>>();
-    final e = scope<ffi.Pointer<BIGNUM>>();
+    final n = scope<ffi.Pointer<ssl.BIGNUM>>();
+    final e = scope<ffi.Pointer<ssl.BIGNUM>>();
     ssl.RSA_get0_key(rsa, n, e, ffi.nullptr);
 
     if (!isPrivateKey) {
@@ -198,19 +198,19 @@ Map<String, dynamic> _exportJwkRsaPrivateOrPublicKey(
       ).toJson();
     }
 
-    final d = scope<ffi.Pointer<BIGNUM>>();
+    final d = scope<ffi.Pointer<ssl.BIGNUM>>();
     ssl.RSA_get0_key(rsa, ffi.nullptr, ffi.nullptr, d);
 
     // p, q, dp, dq, qi is optional in:
     // // https://tools.ietf.org/html/rfc7518#section-6.3.2
     // but explicitly required when exporting in Web Crypto.
-    final p = scope<ffi.Pointer<BIGNUM>>();
-    final q = scope<ffi.Pointer<BIGNUM>>();
+    final p = scope<ffi.Pointer<ssl.BIGNUM>>();
+    final q = scope<ffi.Pointer<ssl.BIGNUM>>();
     ssl.RSA_get0_factors(rsa, p, q);
 
-    final dp = scope<ffi.Pointer<BIGNUM>>();
-    final dq = scope<ffi.Pointer<BIGNUM>>();
-    final qi = scope<ffi.Pointer<BIGNUM>>();
+    final dp = scope<ffi.Pointer<ssl.BIGNUM>>();
+    final dq = scope<ffi.Pointer<ssl.BIGNUM>>();
+    final qi = scope<ffi.Pointer<ssl.BIGNUM>>();
     ssl.RSA_get0_crt_params(rsa, dp, dq, qi);
 
     return JsonWebKey(

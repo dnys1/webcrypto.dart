@@ -17,13 +17,13 @@ part of impl_ffi;
 /// Get `ssl.NID_...` from BoringSSL matching the given [curve].
 int _ecCurveToNID(EllipticCurve curve) {
   if (curve == EllipticCurve.p256) {
-    return NID_X9_62_prime256v1;
+    return ssl.NID_X9_62_prime256v1;
   }
   if (curve == EllipticCurve.p384) {
-    return NID_secp384r1;
+    return ssl.NID_secp384r1;
   }
   if (curve == EllipticCurve.p521) {
-    return NID_secp521r1;
+    return ssl.NID_secp521r1;
   }
   // This should never happen!
   throw UnsupportedError('curve "$curve" is not supported');
@@ -31,13 +31,13 @@ int _ecCurveToNID(EllipticCurve curve) {
 
 /// Get [EllipticCurve] from matching BoringSSL `ssl.NID_...`.
 EllipticCurve _ecCurveFromNID(int nid) {
-  if (nid == NID_X9_62_prime256v1) {
+  if (nid == ssl.NID_X9_62_prime256v1) {
     return EllipticCurve.p256;
   }
-  if (nid == NID_secp384r1) {
+  if (nid == ssl.NID_secp384r1) {
     return EllipticCurve.p384;
   }
-  if (nid == NID_secp521r1) {
+  if (nid == ssl.NID_secp521r1) {
     return EllipticCurve.p521;
   }
   // This should never happen!
@@ -64,7 +64,7 @@ void _validateEllipticCurveKey(
   EllipticCurve curve,
 ) {
   return _Scope.sync((scope) {
-    _checkData(ssl.EVP_PKEY_id.invoke(key) == EVP_PKEY_EC,
+    _checkData(ssl.EVP_PKEY_id.invoke(key) == ssl.EVP_PKEY_EC,
         message: 'key is not an EC key');
 
     final ec = ssl.EVP_PKEY_get1_EC_KEY.invoke(key);
@@ -77,7 +77,7 @@ void _validateEllipticCurveKey(
     // leave a flag, such that exporting the private key won't include the
     // public key.
     final encFlags = ssl.EC_KEY_get_enc_flags(ec);
-    ssl.EC_KEY_set_enc_flags(ec, encFlags & ~EC_PKEY_NO_PUBKEY);
+    ssl.EC_KEY_set_enc_flags(ec, encFlags & ~ssl.EC_PKEY_NO_PUBKEY);
 
     // Check the curve of the imported key
     final nid = ssl.EC_GROUP_get_curve_name(ssl.EC_KEY_get0_group(ec));
@@ -171,7 +171,7 @@ _EvpPKey _importJwkEcPrivateOrPublicKey(
     ));
 
     // Utility to decode a JWK parameter.
-    ffi.Pointer<BIGNUM> decodeParam(String val, String prop) {
+    ffi.Pointer<ssl.BIGNUM> decodeParam(String val, String prop) {
       final bytes = _jwkDecodeBase64UrlNoPadding(val, prop);
       _checkData(
         bytes.length == paramSize,
@@ -265,7 +265,7 @@ Uint8List _exportRawEcPublicKey(_EvpPKey key) {
         cbb,
         ssl.EC_KEY_get0_group(ec),
         ssl.EC_KEY_get0_public_key(ec),
-        point_conversion_form_t.POINT_CONVERSION_UNCOMPRESSED,
+        ssl.point_conversion_form_t.POINT_CONVERSION_UNCOMPRESSED,
         ffi.nullptr,
       ),
       fallback: 'formatting failed',

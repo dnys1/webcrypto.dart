@@ -112,7 +112,8 @@ class _RsassaPkcs1V15PrivateKey implements RsassaPkcs1V15PrivateKey {
   @override
   Future<Uint8List> signStream(Stream<List<int>> data) =>
       _signStream(_key, _hash._md, data, config: (ctx) {
-        _checkOpIsOne(ssl.EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_PADDING));
+        _checkOpIsOne(
+            ssl.EVP_PKEY_CTX_set_rsa_padding(ctx, ssl.RSA_PKCS1_PADDING));
       });
 
   @override
@@ -141,7 +142,8 @@ class _RsassaPkcs1V15PublicKey implements RsassaPkcs1V15PublicKey {
   @override
   Future<bool> verifyStream(List<int> signature, Stream<List<int>> data) =>
       _verifyStream(_key, _hash._md, signature, data, config: (ctx) {
-        _checkOpIsOne(ssl.EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_PADDING));
+        _checkOpIsOne(
+            ssl.EVP_PKEY_CTX_set_rsa_padding(ctx, ssl.RSA_PKCS1_PADDING));
       });
 
   @override

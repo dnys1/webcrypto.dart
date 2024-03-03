@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_ffi;
+part of 'impl_ffi.dart';
 
 Future<AesCtrSecretKey> aesCtr_importRawKey(List<int> keyData) async =>
     _AesCtrSecretKey(_aesImportRawKey(keyData));
@@ -67,7 +67,7 @@ Stream<Uint8List> _aesCtrEncryptOrDecrypt(
     assert(key.length == 16 || key.length == 32);
     final cipher =
         key.length == 16 ? ssl.EVP_aes_128_ctr() : ssl.EVP_aes_256_ctr();
-    const blockSize = AES_BLOCK_SIZE;
+    const blockSize = ssl.AES_BLOCK_SIZE;
 
     // Find the number of possible counter values, as the counter may not be
     // reused this will limit how much data we can process. If we get more data

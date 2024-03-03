@@ -40,7 +40,7 @@ Stream<Uint8List> _aesCbcEncryptOrDecrypt(
     assert(key.length == 16 || key.length == 32);
     final cipher =
         key.length == 16 ? ssl.EVP_aes_128_cbc() : ssl.EVP_aes_256_cbc();
-    const blockSize = AES_BLOCK_SIZE;
+    const blockSize = ssl.AES_BLOCK_SIZE;
 
     final ivSize = ssl.EVP_CIPHER_iv_length(cipher);
     if (iv.length != ivSize) {

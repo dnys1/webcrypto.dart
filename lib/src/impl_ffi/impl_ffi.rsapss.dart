@@ -123,7 +123,7 @@ class _RsaPssPrivateKey implements RsaPssPrivateKey {
     return _signStream(_key, _hash._md, data, config: (ctx) {
       _checkOpIsOne(ssl.EVP_PKEY_CTX_set_rsa_padding(
         ctx,
-        RSA_PKCS1_PSS_PADDING,
+        ssl.RSA_PKCS1_PSS_PADDING,
       ));
       _checkDataIsOne(ssl.EVP_PKEY_CTX_set_rsa_pss_saltlen(ctx, saltLength));
       _checkDataIsOne(ssl.EVP_PKEY_CTX_set_rsa_mgf1_md(ctx, _hash._md));
@@ -174,7 +174,7 @@ class _RsaPssPublicKey implements RsaPssPublicKey {
     return _verifyStream(_key, _hash._md, signature, data, config: (ctx) {
       _checkOpIsOne(ssl.EVP_PKEY_CTX_set_rsa_padding(
         ctx,
-        RSA_PKCS1_PSS_PADDING,
+        ssl.RSA_PKCS1_PSS_PADDING,
       ));
       _checkDataIsOne(ssl.EVP_PKEY_CTX_set_rsa_pss_saltlen(ctx, saltLength));
       _checkDataIsOne(ssl.EVP_PKEY_CTX_set_rsa_mgf1_md(ctx, _hash._md));

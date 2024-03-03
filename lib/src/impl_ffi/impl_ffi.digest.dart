@@ -29,10 +29,10 @@ abstract class _Hash implements Hash {
   }
 
   @protected
-  ffi.Pointer<EVP_MD> Function() get _algorithm;
+  ffi.Pointer<ssl.EVP_MD> Function() get _algorithm;
 
   /// Get an instantiated [EVP_MD] for this hash algorithm.
-  ffi.Pointer<EVP_MD> get _md {
+  ffi.Pointer<ssl.EVP_MD> get _md {
     final md = _algorithm();
     _checkOp(md.address != 0, fallback: 'failed to instantiate hash algorithm');
     return md;
@@ -68,28 +68,28 @@ class _Sha1 extends _Hash {
   const _Sha1();
 
   @override
-  ffi.Pointer<EVP_MD> Function() get _algorithm => ssl.EVP_sha1;
+  ffi.Pointer<ssl.EVP_MD> Function() get _algorithm => ssl.EVP_sha1;
 }
 
 class _Sha256 extends _Hash {
   const _Sha256();
 
   @override
-  ffi.Pointer<EVP_MD> Function() get _algorithm => ssl.EVP_sha256;
+  ffi.Pointer<ssl.EVP_MD> Function() get _algorithm => ssl.EVP_sha256;
 }
 
 class _Sha384 extends _Hash {
   const _Sha384();
 
   @override
-  ffi.Pointer<EVP_MD> Function() get _algorithm => ssl.EVP_sha384;
+  ffi.Pointer<ssl.EVP_MD> Function() get _algorithm => ssl.EVP_sha384;
 }
 
 class _Sha512 extends _Hash {
   const _Sha512();
 
   @override
-  ffi.Pointer<EVP_MD> Function() get _algorithm => ssl.EVP_sha512;
+  ffi.Pointer<ssl.EVP_MD> Function() get _algorithm => ssl.EVP_sha512;
 }
 
 const Hash sha1 = _Sha1();

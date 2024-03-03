@@ -21,35 +21,11 @@
 // ignore_for_file: type=lint
 import 'dart:ffi' as ffi;
 
-/// Bindings to src/webcrypto.h.
-class WebCrypto {
-  /// Holds the symbol lookup function.
-  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-      _lookup;
-
-  /// The symbols are looked up in [dynamicLibrary].
-  WebCrypto(ffi.DynamicLibrary dynamicLibrary)
-      : _lookup = dynamicLibrary.lookup;
-
-  /// The symbols are looked up with [lookup].
-  WebCrypto.fromLookup(
-      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
-          lookup)
-      : _lookup = lookup;
-
-  /// Function to lookup BoringSSL symbols based on index in the Sym enum.
-  /// See src/symbols.yaml for details.
-  ffi.Pointer<ffi.Void> webcrypto_lookup_symbol(
-    int index,
-  ) {
-    return _webcrypto_lookup_symbol(
-      index,
-    );
-  }
-
-  late final _webcrypto_lookup_symbolPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Void> Function(ffi.Int32)>>(
-          'webcrypto_lookup_symbol');
-  late final _webcrypto_lookup_symbol = _webcrypto_lookup_symbolPtr
-      .asFunction<ffi.Pointer<ffi.Void> Function(int)>();
-}
+/// Function to lookup BoringSSL symbols based on index in the Sym enum.
+/// See src/symbols.yaml for details.
+@ffi.Native<ffi.Pointer<ffi.Void> Function(ffi.Int32)>(
+    symbol: 'webcrypto_lookup_symbol',
+    assetId: 'package:webcrypto/webcrypto.dart')
+external ffi.Pointer<ffi.Void> webcrypto_lookup_symbol(
+  int index,
+);

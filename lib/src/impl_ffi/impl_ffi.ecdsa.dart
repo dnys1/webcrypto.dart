@@ -109,8 +109,8 @@ Uint8List _convertEcdsaDerSignatureToWebCryptoSignature(
     )));
 
     // Access R and S from the ecdsa signature
-    final R = scope<ffi.Pointer<BIGNUM>>();
-    final S = scope<ffi.Pointer<BIGNUM>>();
+    final R = scope<ffi.Pointer<ssl.BIGNUM>>();
+    final S = scope<ffi.Pointer<ssl.BIGNUM>>();
     ssl.ECDSA_SIG_get0(ecdsa, R, S);
 
     // Dump R and S to return value.
@@ -157,8 +157,8 @@ Uint8List? _convertEcdsaWebCryptoSignatureToDerSignature(
     final ecdsa = scope.create(ssl.ECDSA_SIG_new, ssl.ECDSA_SIG_free);
 
     // Access R and S from the ecdsa signature
-    final R = scope<ffi.Pointer<BIGNUM>>();
-    final S = scope<ffi.Pointer<BIGNUM>>();
+    final R = scope<ffi.Pointer<ssl.BIGNUM>>();
+    final S = scope<ffi.Pointer<ssl.BIGNUM>>();
     ssl.ECDSA_SIG_get0(ecdsa, R, S);
 
     final psig = scope.dataAsPointer<ffi.Uint8>(signature);
