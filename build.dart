@@ -22,6 +22,7 @@ final IOSink buildLogs = () {
 
 final Logger logger = Logger('webcrypto_build');
 
+// From: third_party/boringssl/sources.cmake
 List<String> asmSources(Target target) => switch (target) {
       Target.macOSArm64 => const [
           'apple-aarch64/crypto/chacha/chacha-armv8.S',
@@ -95,6 +96,42 @@ List<String> asmSources(Target target) => switch (target) {
           'linux-x86_64/crypto/fipsmodule/x86_64-mont5.S',
           'linux-x86_64/crypto/test/trampoline-x86_64.S',
           'src/crypto/hrss/asm/poly_rq_mul.S',
+        ],
+      Target.windowsArm64 => const [
+          'win-aarch64/crypto/chacha/chacha-armv8.S',
+          'win-aarch64/crypto/cipher_extra/chacha20_poly1305_armv8.S',
+          'win-aarch64/crypto/fipsmodule/aesv8-armx64.S',
+          'win-aarch64/crypto/fipsmodule/armv8-mont.S',
+          'win-aarch64/crypto/fipsmodule/ghash-neon-armv8.S',
+          'win-aarch64/crypto/fipsmodule/ghashv8-armx64.S',
+          'win-aarch64/crypto/fipsmodule/p256-armv8-asm.S',
+          'win-aarch64/crypto/fipsmodule/p256_beeu-armv8-asm.S',
+          'win-aarch64/crypto/fipsmodule/sha1-armv8.S',
+          'win-aarch64/crypto/fipsmodule/sha256-armv8.S',
+          'win-aarch64/crypto/fipsmodule/sha512-armv8.S',
+          'win-aarch64/crypto/fipsmodule/vpaes-armv8.S',
+          'win-aarch64/crypto/test/trampoline-armv8.S',
+        ],
+      Target.windowsX64 => const [
+          'win-x86_64/crypto/chacha/chacha-x86_64.asm',
+          'win-x86_64/crypto/cipher_extra/aes128gcmsiv-x86_64.asm',
+          'win-x86_64/crypto/cipher_extra/chacha20_poly1305_x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/aesni-gcm-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/aesni-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/ghash-ssse3-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/ghash-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/md5-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/p256-x86_64-asm.asm',
+          'win-x86_64/crypto/fipsmodule/p256_beeu-x86_64-asm.asm',
+          'win-x86_64/crypto/fipsmodule/rdrand-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/rsaz-avx2.asm',
+          'win-x86_64/crypto/fipsmodule/sha1-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/sha256-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/sha512-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/vpaes-x86_64.asm',
+          'win-x86_64/crypto/fipsmodule/x86_64-mont.asm',
+          'win-x86_64/crypto/fipsmodule/x86_64-mont5.asm',
+          'win-x86_64/crypto/test/trampoline-x86_64.asm',
         ],
       _ => throw UnsupportedError('Unsupported target: $target'),
     };
@@ -344,6 +381,13 @@ void main(List<String> args) async {
     buildLogs.writeln('Config: $config');
 
     final boringSslRoot = config.packageRoot.resolve('third_party/boringssl/');
+    const disabledMsvcWarnings = [
+      "C4100", // 'exarg' : unreferenced formal parameter
+      "C4127", // conditional expression is constant
+      "C4244", // 'function' : conversion from 'int' to 'uint8_t', possible loss of data
+      "C4267", // conversion from 'size_t' to 'int', possible loss of data
+      "C4706", // assignment within conditional expression
+    ];
     final boringSslBuilder = CBuilder.library(
       name: 'webcrypto',
       assetId: 'package:webcrypto/webcrypto.dart',
@@ -356,8 +400,22 @@ void main(List<String> args) async {
         boringSslRoot.resolve('src/include/').toFilePath(),
         config.packageRoot.resolve('src').toFilePath(),
       ],
+      flags: [
+        if (Platform.isWindows) ...[
+          '-utf-8',
+          '-W4',
+          '-WX',
+          ...disabledMsvcWarnings.map((code) => '-wd${code.substring(1)}'),
+        ]
+      ],
       defines: {
         'OPENSSL_SMALL': null,
+        if (Platform.isWindows) ...{
+          '_HAS_EXCEPTIONS': '0',
+          'WIN32_LEAN_AND_MEAN': null,
+          'NOMINMAX': null,
+          '_CRT_SECURE_NO_WARNINGS': null,
+        },
       },
     );
     buildLogs.writeln('Building webcrypto');
