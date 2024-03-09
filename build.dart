@@ -380,6 +380,22 @@ void main(List<String> args) async {
     final output = BuildOutput();
     buildLogs.writeln('Config: $config');
 
+    if (Platform.isWindows) {
+      final buildOutput = BuildOutput(
+        assets: [
+          // Dummy asset for windows since I can't figure out ASM sources.
+          Asset(
+            id: 'package:webcrypto/webcrypto.dart',
+            linkMode: LinkMode.dynamic,
+            target: config.target,
+            path: AssetInProcess(),
+          ),
+        ],
+      );
+      await buildOutput.writeToFile(outDir: config.outDir);
+      return;
+    }
+
     final boringSslRoot = config.packageRoot.resolve('third_party/boringssl/');
     const disabledMsvcWarnings = [
       "C4100", // 'exarg' : unreferenced formal parameter
@@ -406,7 +422,7 @@ void main(List<String> args) async {
           '-W4',
           '-WX',
           ...disabledMsvcWarnings.map((code) => '-wd${code.substring(1)}'),
-        ]
+        ],
       ],
       defines: {
         'OPENSSL_SMALL': null,
