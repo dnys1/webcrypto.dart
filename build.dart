@@ -23,8 +23,12 @@ final IOSink buildLogs = () {
 final Logger logger = Logger('webcrypto_build');
 
 // From: third_party/boringssl/sources.cmake
-List<String> asmSources(Target target) => switch (target) {
-      Target.macOSArm64 => const [
+List<String> asmSources(
+  OS targetOS,
+  Architecture targetArchitecture,
+) =>
+    switch ((targetOS, targetArchitecture)) {
+      (OS.macOS, Architecture.arm64) => const [
           'apple-aarch64/crypto/chacha/chacha-armv8.S',
           'apple-aarch64/crypto/cipher_extra/chacha20_poly1305_armv8.S',
           'apple-aarch64/crypto/fipsmodule/aesv8-armx64.S',
@@ -39,7 +43,7 @@ List<String> asmSources(Target target) => switch (target) {
           'apple-aarch64/crypto/fipsmodule/vpaes-armv8.S',
           'apple-aarch64/crypto/test/trampoline-armv8.S',
         ],
-      Target.macOSX64 => const [
+      (OS.macOS, Architecture.x64) => const [
           'apple-x86_64/crypto/chacha/chacha-x86_64.S',
           'apple-x86_64/crypto/cipher_extra/aes128gcmsiv-x86_64.S',
           'apple-x86_64/crypto/cipher_extra/chacha20_poly1305_x86_64.S',
@@ -60,7 +64,7 @@ List<String> asmSources(Target target) => switch (target) {
           'apple-x86_64/crypto/fipsmodule/x86_64-mont5.S',
           'apple-x86_64/crypto/test/trampoline-x86_64.S',
         ],
-      Target.linuxArm64 => const [
+      (OS.linux, Architecture.arm64) => const [
           'linux-aarch64/crypto/chacha/chacha-armv8.S',
           'linux-aarch64/crypto/cipher_extra/chacha20_poly1305_armv8.S',
           'linux-aarch64/crypto/fipsmodule/aesv8-armx64.S',
@@ -75,7 +79,7 @@ List<String> asmSources(Target target) => switch (target) {
           'linux-aarch64/crypto/fipsmodule/vpaes-armv8.S',
           'linux-aarch64/crypto/test/trampoline-armv8.S',
         ],
-      Target.linuxX64 => const [
+      (OS.linux, Architecture.x64) => const [
           'linux-x86_64/crypto/chacha/chacha-x86_64.S',
           'linux-x86_64/crypto/cipher_extra/aes128gcmsiv-x86_64.S',
           'linux-x86_64/crypto/cipher_extra/chacha20_poly1305_x86_64.S',
@@ -97,7 +101,7 @@ List<String> asmSources(Target target) => switch (target) {
           'linux-x86_64/crypto/test/trampoline-x86_64.S',
           'src/crypto/hrss/asm/poly_rq_mul.S',
         ],
-      Target.windowsArm64 => const [
+      (OS.windows, Architecture.arm64) => const [
           'win-aarch64/crypto/chacha/chacha-armv8.S',
           'win-aarch64/crypto/cipher_extra/chacha20_poly1305_armv8.S',
           'win-aarch64/crypto/fipsmodule/aesv8-armx64.S',
@@ -112,7 +116,7 @@ List<String> asmSources(Target target) => switch (target) {
           'win-aarch64/crypto/fipsmodule/vpaes-armv8.S',
           'win-aarch64/crypto/test/trampoline-armv8.S',
         ],
-      Target.windowsX64 => const [
+      (OS.windows, Architecture.x64) => const [
           'win-x86_64/crypto/chacha/chacha-x86_64.asm',
           'win-x86_64/crypto/cipher_extra/aes128gcmsiv-x86_64.asm',
           'win-x86_64/crypto/cipher_extra/chacha20_poly1305_x86_64.asm',
@@ -133,7 +137,8 @@ List<String> asmSources(Target target) => switch (target) {
           'win-x86_64/crypto/fipsmodule/x86_64-mont5.asm',
           'win-x86_64/crypto/test/trampoline-x86_64.asm',
         ],
-      _ => throw UnsupportedError('Unsupported target: $target'),
+      final unsupported =>
+        throw UnsupportedError('Unsupported target: $unsupported'),
     };
 
 const boringSslSources = [
@@ -376,72 +381,72 @@ const webCryptoSources = [
 void main(List<String> args) async {
   buildLogs.writeln('Starting webcrypto build');
   try {
-    final config = await BuildConfig.fromArgs(args);
-    final output = BuildOutput();
-    buildLogs.writeln('Config: $config');
+    await build(args, (config, output) async {
+      buildLogs.writeln('Config: $config');
 
-    if (Platform.isWindows) {
-      final buildOutput = BuildOutput(
-        assets: [
+      if (Platform.isWindows) {
+        output.addAsset(
           // Dummy asset for windows since I can't figure out ASM sources.
-          Asset(
-            id: 'package:webcrypto/webcrypto.dart',
-            linkMode: LinkMode.dynamic,
-            target: config.target,
-            path: AssetInProcess(),
+          NativeCodeAsset(
+            package: config.packageName,
+            name: 'webcrypto.dart',
+            linkMode: LookupInProcess(),
+            os: config.targetOS,
+            architecture: config.targetArchitecture,
           ),
-        ],
-      );
-      await buildOutput.writeToFile(outDir: config.outDir);
-      return;
-    }
+        );
+        return;
+      }
 
-    final boringSslRoot = config.packageRoot.resolve('third_party/boringssl/');
-    const disabledMsvcWarnings = [
-      "C4100", // 'exarg' : unreferenced formal parameter
-      "C4127", // conditional expression is constant
-      "C4244", // 'function' : conversion from 'int' to 'uint8_t', possible loss of data
-      "C4267", // conversion from 'size_t' to 'int', possible loss of data
-      "C4706", // assignment within conditional expression
-    ];
-    final boringSslBuilder = CBuilder.library(
-      name: 'webcrypto',
-      assetId: 'package:webcrypto/webcrypto.dart',
-      sources: [
-        ...boringSslSources.map(boringSslRoot.resolve),
-        ...asmSources(config.target).map(boringSslRoot.resolve),
-        ...webCryptoSources.map(config.packageRoot.resolve),
-      ].map((uri) => uri.toFilePath()).toList(),
-      includes: [
-        boringSslRoot.resolve('src/include/').toFilePath(),
-        config.packageRoot.resolve('src').toFilePath(),
-      ],
-      flags: [
-        if (Platform.isWindows) ...[
-          '-utf-8',
-          '-W4',
-          '-WX',
-          ...disabledMsvcWarnings.map((code) => '-wd${code.substring(1)}'),
+      final boringSslRoot =
+          config.packageRoot.resolve('third_party/boringssl/');
+      const disabledMsvcWarnings = [
+        "C4100", // 'exarg' : unreferenced formal parameter
+        "C4127", // conditional expression is constant
+        "C4244", // 'function' : conversion from 'int' to 'uint8_t', possible loss of data
+        "C4267", // conversion from 'size_t' to 'int', possible loss of data
+        "C4706", // assignment within conditional expression
+      ];
+      final boringSslBuilder = CBuilder.library(
+        name: 'webcrypto',
+        assetName: 'webcrypto.dart',
+        sources: [
+          ...boringSslSources.map(boringSslRoot.resolve),
+          ...asmSources(config.targetOS, config.targetArchitecture!)
+              .map(boringSslRoot.resolve),
+          ...webCryptoSources.map(config.packageRoot.resolve),
+        ].map((uri) => uri.toFilePath()).toList(),
+        includes: [
+          boringSslRoot.resolve('src/include/').toFilePath(),
+          config.packageRoot.resolve('src').toFilePath(),
         ],
-      ],
-      defines: {
-        'OPENSSL_SMALL': null,
-        if (Platform.isWindows) ...{
-          '_HAS_EXCEPTIONS': '0',
-          'WIN32_LEAN_AND_MEAN': null,
-          'NOMINMAX': null,
-          '_CRT_SECURE_NO_WARNINGS': null,
+        flags: [
+          if (Platform.isWindows) ...[
+            '-utf-8',
+            '-W4',
+            '-WX',
+            ...disabledMsvcWarnings.map((code) => '-wd${code.substring(1)}'),
+          ],
+        ],
+        defines: {
+          'OPENSSL_SMALL': null,
+          if (Platform.isWindows) ...{
+            '_HAS_EXCEPTIONS': '0',
+            'WIN32_LEAN_AND_MEAN': null,
+            'NOMINMAX': null,
+            '_CRT_SECURE_NO_WARNINGS': null,
+          },
         },
-      },
-    );
-    buildLogs.writeln('Building webcrypto');
-    await boringSslBuilder.run(
-      buildConfig: config,
-      buildOutput: output,
-      logger: logger,
-    );
-    await output.writeToFile(outDir: config.outDir);
-    buildLogs.writeln('Webcrypto build complete');
+        dartBuildFiles: ['build.dart'],
+      );
+      buildLogs.writeln('Building webcrypto');
+      await boringSslBuilder.run(
+        buildConfig: config,
+        buildOutput: output,
+        logger: logger,
+      );
+      buildLogs.writeln('Webcrypto build complete');
+    });
   } on Object catch (e, st) {
     buildLogs.writeln('Error: $e');
     buildLogs.writeln('Stacktrace: $st');
