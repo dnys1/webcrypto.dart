@@ -12,12 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-part of 'impl_js.dart';
+library webcrypto.impl_stub;
 
-void fillRandomBytes(TypedData destination) {
-  try {
-    subtle.getRandomValues(destination);
-  } on subtle.JSDomException catch (e) {
-    throw _translateDomException(e);
-  }
+import 'package:webcrypto/src/impl_interface/impl_interface.dart';
+
+part 'impl_stub.aescbc.dart';
+part 'impl_stub.aesctr.dart';
+
+const WebCryptoImpl webCryptImpl = _WebCryptoImpl();
+
+final class _WebCryptoImpl implements WebCryptoImpl {
+  const _WebCryptoImpl();
+
+  @override
+  final aesCbcSecretKey = const _StaticAesCbcSecretKeyImpl();
+
+  @override
+  final aesCtrSecretKey = const _StaticAesCtrSecretKeyImpl();
 }

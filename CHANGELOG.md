@@ -1,3 +1,12 @@
+# 0.5.7
+* Added compatibility for AGP 8.4.
+* Improved API documentation for ECDH.
+* Bumped minimum Android SDK/ API level to 21, dropping support for Android 4 and below.
+
+# 0.5.6
+* Disable LTO on Android to fix [#80](https://github.com/google/webcrypto.dart/issues/80).
+* Migrate to `dart:js_interop` to ensure [wasm compatibility](https://dart.dev/interop/js-interop/package-web#package-web-vs-dart-html).
+
 # 0.5.5
 * Adds a namespace in `build.gradle` for compatibility with AGP 8.0.
 

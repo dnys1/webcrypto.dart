@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_js;
+part of 'impl_js.dart';
 
 const _rsassaPkcs1V15Algorithm = subtle.Algorithm(name: 'RSASSA-PKCS1-v1_5');
 
@@ -116,6 +116,11 @@ class _RsassaPkcs1V15PrivateKey implements RsassaPkcs1V15PrivateKey {
 class _RsassaPkcs1V15PublicKey implements RsassaPkcs1V15PublicKey {
   final subtle.JSCryptoKey _key;
   _RsassaPkcs1V15PublicKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'RsassaPkcs1V15PublicKey\'';
+  }
 
   @override
   Future<bool> verifyBytes(List<int> signature, List<int> data) async {

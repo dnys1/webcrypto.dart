@@ -6,7 +6,7 @@ import 'package:native_toolchain_c/native_toolchain_c.dart';
 
 final IOSink buildLogs = () {
   final logsFile = File.fromUri(
-    Platform.script.resolve('.dart_tool/build.log'),
+    Platform.script.resolve('../.dart_tool/build.log'),
   );
   logsFile.createSync(recursive: true);
   final logSink = logsFile.openWrite(mode: FileMode.write);
@@ -437,12 +437,11 @@ void main(List<String> args) async {
             '_CRT_SECURE_NO_WARNINGS': null,
           },
         },
-        dartBuildFiles: ['build.dart'],
       );
       buildLogs.writeln('Building webcrypto');
       await boringSslBuilder.run(
-        buildConfig: config,
-        buildOutput: output,
+        config: config,
+        output: output,
         logger: logger,
       );
       buildLogs.writeln('Webcrypto build complete');

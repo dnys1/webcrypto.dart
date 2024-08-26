@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_ffi;
+part of 'impl_ffi.dart';
 
 String _rsassaPkcs1V15JwkAlgFromHash(_Hash hash) {
   if (hash == Hash.sha1) {
@@ -105,6 +105,11 @@ class _RsassaPkcs1V15PrivateKey implements RsassaPkcs1V15PrivateKey {
   final _Hash _hash;
 
   _RsassaPkcs1V15PrivateKey(this._key, this._hash);
+
+  @override
+  String toString() {
+    return 'Instance of \'RsassaPkcs1V15PrivateKey\'';
+  }
 
   @override
   Future<Uint8List> signBytes(List<int> data) => signStream(Stream.value(data));

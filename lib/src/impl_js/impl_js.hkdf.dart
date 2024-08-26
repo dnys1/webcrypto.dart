@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_js;
+part of 'impl_js.dart';
 
 const _hkdfAlgorithmName = 'HKDF';
 
@@ -34,6 +34,11 @@ Future<HkdfSecretKey> hkdfSecretKey_importRawKey(List<int> keyData) async {
 class _HkdfSecretKey implements HkdfSecretKey {
   final subtle.JSCryptoKey _key;
   _HkdfSecretKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'HkdfSecretKey\'';
+  }
 
   @override
   Future<Uint8List> deriveBits(

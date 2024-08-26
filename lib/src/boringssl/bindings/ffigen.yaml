@@ -40,4 +40,4 @@ preamble: |
   // ignore_for_file: unused_element
   // ignore_for_file: non_constant_identifier_names
 ffi-native:
-  asset: package:webcrypto/webcrypto.dart
+  assetId: package:webcrypto/webcrypto.dart

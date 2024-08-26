@@ -14,12 +14,12 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_js;
+part of 'impl_js.dart';
 
 const _aesCtrAlgorithm = subtle.Algorithm(name: 'AES-CTR');
 
-Future<AesCtrSecretKey> aesCtr_importRawKey(List<int> keyData) async {
-  return _AesCtrSecretKey(await _importKey(
+Future<AesCtrSecretKeyImpl> aesCtr_importRawKey(List<int> keyData) async {
+  return _AesCtrSecretKeyImpl(await _importKey(
     'raw',
     keyData,
     _aesCtrAlgorithm,
@@ -28,10 +28,10 @@ Future<AesCtrSecretKey> aesCtr_importRawKey(List<int> keyData) async {
   ));
 }
 
-Future<AesCtrSecretKey> aesCtr_importJsonWebKey(
+Future<AesCtrSecretKeyImpl> aesCtr_importJsonWebKey(
   Map<String, dynamic> jwk,
 ) async {
-  return _AesCtrSecretKey(await _importJsonWebKey(
+  return _AesCtrSecretKeyImpl(await _importJsonWebKey(
     jwk,
     _aesCtrAlgorithm,
     _usagesEncryptDecrypt,
@@ -39,17 +39,41 @@ Future<AesCtrSecretKey> aesCtr_importJsonWebKey(
   ));
 }
 
-Future<AesCtrSecretKey> aesCtr_generateKey(int length) async {
-  return _AesCtrSecretKey(await _generateKey(
+Future<AesCtrSecretKeyImpl> aesCtr_generateKey(int length) async {
+  return _AesCtrSecretKeyImpl(await _generateKey(
     _aesCtrAlgorithm.update(length: length),
     _usagesEncryptDecrypt,
     'secret',
   ));
 }
 
-class _AesCtrSecretKey implements AesCtrSecretKey {
+final class _StaticAesCtrSecretKeyImpl implements StaticAesCtrSecretKeyImpl {
+  const _StaticAesCtrSecretKeyImpl();
+
+  @override
+  Future<AesCtrSecretKeyImpl> importRawKey(List<int> keyData) async {
+    return await aesCtr_importRawKey(keyData);
+  }
+
+  @override
+  Future<AesCtrSecretKeyImpl> importJsonWebKey(Map<String, dynamic> jwk) async {
+    return await aesCtr_importJsonWebKey(jwk);
+  }
+
+  @override
+  Future<AesCtrSecretKeyImpl> generateKey(int length) async {
+    return await aesCtr_generateKey(length);
+  }
+}
+
+final class _AesCtrSecretKeyImpl extends AesCtrSecretKeyImpl {
   final subtle.JSCryptoKey _key;
-  _AesCtrSecretKey(this._key);
+  _AesCtrSecretKeyImpl(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'AesCtrSecretKey\'';
+  }
 
   @override
   Future<Uint8List> decryptBytes(

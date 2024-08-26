@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_js;
+part of 'impl_js.dart';
 
 const _hmacAlgorithm = subtle.Algorithm(name: 'HMAC');
 
@@ -84,6 +84,11 @@ Future<HmacSecretKey> hmacSecretKey_generateKey(Hash hash,
 class _HmacSecretKey implements HmacSecretKey {
   final subtle.JSCryptoKey _key;
   _HmacSecretKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'HmacSecretKey\'';
+  }
 
   @override
   Future<Uint8List> signBytes(List<int> data) async {

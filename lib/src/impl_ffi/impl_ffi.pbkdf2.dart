@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_ffi;
+part of 'impl_ffi.dart';
 
 Future<Pbkdf2SecretKey> pbkdf2SecretKey_importRawKey(List<int> keyData) async {
   return _Pbkdf2SecretKey(Uint8List.fromList(keyData));
@@ -24,6 +24,11 @@ class _Pbkdf2SecretKey implements Pbkdf2SecretKey {
   final Uint8List _key;
 
   _Pbkdf2SecretKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'Pbkdf2SecretKey\'';
+  }
 
   @override
   Future<Uint8List> deriveBits(

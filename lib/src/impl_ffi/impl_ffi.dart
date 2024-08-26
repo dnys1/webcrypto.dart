@@ -27,7 +27,8 @@ import 'package:meta/meta.dart';
 import 'package:webcrypto/src/third_party/boringssl/generated_bindings.dart'
     as ssl;
 
-import '../boringssl/lookup/lookup.dart' show ERR_GET_LIB, ERR_GET_REASON;
+import '../boringssl/lookup/lookup.dart' show ssl, ERR_GET_LIB, ERR_GET_REASON;
+import '../impl_interface/impl_interface.dart';
 import '../jsonwebkey.dart' show JsonWebKey;
 import '../webcrypto/webcrypto.dart';
 
@@ -68,4 +69,16 @@ class _KeyPair<S, T> implements KeyPair<S, T> {
   final T publicKey;
 
   _KeyPair({required this.privateKey, required this.publicKey});
+}
+
+const WebCryptoImpl webCryptImpl = _WebCryptoImpl();
+
+final class _WebCryptoImpl implements WebCryptoImpl {
+  const _WebCryptoImpl();
+
+  @override
+  final aesCbcSecretKey = const _StaticAesCbcSecretKeyImpl();
+
+  @override
+  final aesCtrSecretKey = const _StaticAesCtrSecretKeyImpl();
 }

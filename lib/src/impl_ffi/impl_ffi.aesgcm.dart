@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_ffi;
+part of 'impl_ffi.dart';
 
 Future<AesGcmSecretKey> aesGcm_importRawKey(List<int> keyData) async =>
     _AesGcmSecretKey(_aesImportRawKey(keyData));
@@ -53,7 +53,7 @@ Future<Uint8List> _aesGcmEncryptDecrypt(
     throw _OperationError('tagLength must be 32, 64, 96, 104, 112, 120 or 128');
   }
 
-  // TODO: Check iv length is less than EVP_AEAD_nonce_length
+  // TODO: Check iv length is less than EVP_AEAD_nonce_length, if this is a requirement!
   //       More importantly, add some test cases covering this, also consider
   //       what chrome does, how firefox passes tests. And check if other
   //       primitives that accept an iv/nonce has size limitations on it.
@@ -114,6 +114,11 @@ Future<Uint8List> _aesGcmEncryptDecrypt(
 class _AesGcmSecretKey implements AesGcmSecretKey {
   final Uint8List _key;
   _AesGcmSecretKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'AesGcmSecretKey\'';
+  }
 
   @override
   Future<Uint8List> decryptBytes(

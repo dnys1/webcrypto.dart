@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_js;
+part of 'impl_js.dart';
 
 const _aesGcmAlgorithm = subtle.Algorithm(name: 'AES-GCM');
 
@@ -50,6 +50,11 @@ Future<AesGcmSecretKey> aesGcm_generateKey(int length) async {
 class _AesGcmSecretKey implements AesGcmSecretKey {
   final subtle.JSCryptoKey _key;
   _AesGcmSecretKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'AesGcmSecretKey\'';
+  }
 
   @override
   Future<Uint8List> decryptBytes(

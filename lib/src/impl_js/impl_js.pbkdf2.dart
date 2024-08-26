@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_js;
+part of 'impl_js.dart';
 
 const _pbkdf2AlgorithmName = 'PBKDF2';
 
@@ -34,6 +34,11 @@ Future<Pbkdf2SecretKey> pbkdf2SecretKey_importRawKey(List<int> keyData) async {
 class _Pbkdf2SecretKey implements Pbkdf2SecretKey {
   final subtle.JSCryptoKey _key;
   _Pbkdf2SecretKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'Pbkdf2SecretKey\'';
+  }
 
   @override
   Future<Uint8List> deriveBits(

@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_ffi;
+part of 'impl_ffi.dart';
 
 /// Convert [data] to [Uint8List] and zero to [lengthInBits] if given.
 Uint8List _asUint8ListZeroedToBitLength(List<int> data, [int? lengthInBits]) {
@@ -106,6 +106,11 @@ class _HmacSecretKey implements HmacSecretKey {
   final Uint8List _keyData;
 
   _HmacSecretKey(this._keyData, this._hash);
+
+  @override
+  String toString() {
+    return 'Instance of \'HmacSecretKey\'';
+  }
 
   @override
   Future<Uint8List> signBytes(List<int> data) => signStream(Stream.value(data));

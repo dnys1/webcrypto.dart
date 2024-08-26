@@ -14,7 +14,7 @@
 
 // ignore_for_file: non_constant_identifier_names
 
-part of impl_ffi;
+part of 'impl_ffi.dart';
 
 Future<EcdhPrivateKey> ecdhPrivateKey_importPkcs8Key(
   List<int> keyData,
@@ -72,6 +72,11 @@ class _EcdhPrivateKey implements EcdhPrivateKey {
   final _EvpPKey _key;
 
   _EcdhPrivateKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'EcdhPrivateKey\'';
+  }
 
   @override
   Future<Uint8List> deriveBits(int length, EcdhPublicKey publicKey) async {
@@ -166,6 +171,11 @@ class _EcdhPublicKey implements EcdhPublicKey {
   final _EvpPKey _key;
 
   _EcdhPublicKey(this._key);
+
+  @override
+  String toString() {
+    return 'Instance of \'EcdhPublicKey\'';
+  }
 
   @override
   Future<Map<String, dynamic>> exportJsonWebKey() async =>
